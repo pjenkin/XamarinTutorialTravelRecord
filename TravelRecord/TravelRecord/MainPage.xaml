@@ -4,11 +4,13 @@
              xmlns:local="clr-namespace:TravelRecord"
              x:Class="TravelRecord.MainPage">
 
-    <StackLayout>
-        <!-- Place new controls here -->
-        <Label Text="Welcome to Xamarin.Forms!" 
-           HorizontalOptions="Center"
-           VerticalOptions="CenterAndExpand" />
+    <StackLayout VerticalOptions="Center">
+        <Entry />
+        <Entry />
+        <Button x:Name="LoginButton"
+                Text="Log in"
+                Clicked="LoginButton_Clicked"
+                />
     </StackLayout>
 
 </ContentPage>
