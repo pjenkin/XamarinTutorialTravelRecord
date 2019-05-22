@@ -11,7 +11,8 @@ namespace TravelRecord
         {
             InitializeComponent();
 
-            MainPage = new MainPage();
+            //MainPage = new MainPage();
+            MainPage = new NavigationPage(new MainPage());      // default entry point changed
         }
 
         protected override void OnStart()
