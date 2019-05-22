@@ -10,10 +10,9 @@ using Xamarin.Forms.Xaml;
 namespace TravelRecord
 {
 	[XamlCompilation(XamlCompilationOptions.Compile)]
-    //public partial class HomePage : ContentPage           // 
-    public partial class HomePage : TabbedPage
-    {
-		public HomePage ()
+	public partial class ProfilePage : ContentPage
+	{
+		public ProfilePage ()
 		{
 			InitializeComponent ();
 		}

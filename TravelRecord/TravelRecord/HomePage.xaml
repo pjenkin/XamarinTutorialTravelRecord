@@ -1,12 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+<!-- manually changed to TabbedPage from ContentPage - NB must also change class to inherit from TabbedPage instead of ContentPage -->    
+<TabbedPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+            xmlns:local="clr-namespace:TravelRecord"
              x:Class="TravelRecord.HomePage">
-    <!--<ContentPage.Content>--> <!--boilerplate - not needed-->
-        <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
-        </StackLayout>
-    <!--</ContentPage.Content>-->
-</ContentPage>
+
+
+    <local:HistoryPage Title="History"/>
+
+    <local:MapPage Title="Map" />
+
+    <local:ProfilePage Title="Profile" />
+    
+</TabbedPage>
