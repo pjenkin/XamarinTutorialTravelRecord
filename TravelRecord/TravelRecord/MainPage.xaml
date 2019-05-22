@@ -4,7 +4,8 @@
              xmlns:local="clr-namespace:TravelRecord"
              x:Class="TravelRecord.MainPage">
 
-    <StackLayout VerticalOptions="Center">
+    <StackLayout VerticalOptions="Center"
+                 Margin="20,0,20,0"> <!-- L,T,R,B -->
         <Entry x:Name="email" 
                Placeholder="Email address" 
                Keyboard="Email"/>
@@ -16,7 +17,9 @@
                 Clicked="LoginButton_Clicked"
                 BackgroundColor="Crimson"
                 TextColor="DarkCyan"
-                />
+                Margin="0,50,0,0"
+                /> 
+        <!-- margin can displace other elements - NB 4 arguments, to help with centreing -->
     </StackLayout>
 
 </ContentPage>
