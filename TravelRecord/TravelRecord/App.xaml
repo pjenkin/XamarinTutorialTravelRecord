@@ -8,7 +8,7 @@
                 <Color x:Key="eveningishColour">#22DD22</Color>   <!-- NB good not to give styles colour names, in case colour tweaked later -->
                 <Color x:Key="wheatleColour">#BBFECC</Color>
             <!-- change once, here, to affect all instances-->
-            <Style TargetType="Button">
+            <Style x:Key="normalButton"  TargetType="Button">
                 <Setter Property="BackgroundColor" Value="{StaticResource eveningishColour}"/>
                 <Setter Property="TextColor" Value="{StaticResource wheatleColour}"/> 
             </Style>

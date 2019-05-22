@@ -20,7 +20,14 @@
                 Clicked="LoginButton_Clicked"
                 BackgroundColor="{StaticResource greenishColour}"
                 Margin="0,50,0,0"
-                /> 
+                Style="{StaticResource normalButton}"
+                />
+        <Button x:Name="DummyButton"
+                Text="Log in"
+                Clicked="LoginButton_Clicked"
+                BackgroundColor="{StaticResource greenishColour}"
+                Margin="0,50,0,0"
+                />
         <!-- margin can displace other elements - NB 4 arguments, to help with centreing -->
         <!-- was BackgroundColor="Crimson"-->
     </StackLayout>
