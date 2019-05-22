@@ -17,5 +17,10 @@ namespace TravelRecord
 		{
 			InitializeComponent ();
 		}
-	}
+
+        private void AddToolbarItem_Clicked(object sender, EventArgs e)
+        {
+            Navigation.PushAsync(new NewTravelPage());          // segue over to new-travel page
+        }
+    }
 }

@@ -4,7 +4,10 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
             xmlns:local="clr-namespace:TravelRecord"
              x:Class="TravelRecord.HomePage">
-
+    <TabbedPage.ToolbarItems>
+        <ToolbarItem x:Name="AddToolbarItem" Text="Add"
+                     Clicked="AddToolbarItem_Clicked"/>
+    </TabbedPage.ToolbarItems>
 
     <local:HistoryPage Title="History"/>
 
