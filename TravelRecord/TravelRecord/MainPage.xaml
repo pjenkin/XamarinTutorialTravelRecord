@@ -19,7 +19,6 @@
                 Text="Log in"
                 Clicked="LoginButton_Clicked"
                 BackgroundColor="{StaticResource greenishColour}"
-                TextColor="DarkCyan"
                 Margin="0,50,0,0"
                 /> 
         <!-- margin can displace other elements - NB 4 arguments, to help with centreing -->
