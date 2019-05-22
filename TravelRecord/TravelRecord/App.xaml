@@ -2,7 +2,12 @@
 <Application xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="TravelRecord.App">
-    <Application.Resources>
-
+    <Application.Resources>     <!-- ready made Application.Resources element-->
+        <!-- <ContentPage.Resources>-->
+            <ResourceDictionary>
+                <Color x:Key="greenishColour">#22DD22</Color>
+                <!-- change once, here, to affect all instances-->
+            </ResourceDictionary>
+        <!-- </ContentPage.Resources> -->
     </Application.Resources>
 </Application>
