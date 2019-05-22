@@ -4,22 +4,32 @@
              xmlns:local="clr-namespace:TravelRecord"
              x:Class="TravelRecord.MainPage">
 
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Color x:Key="greenishColour">#22DD22</Color> <!-- change once, here, to affect all instances-->
+        </ResourceDictionary>
+        
+    </ContentPage.Resources>
+
     <StackLayout VerticalOptions="Center"
                  Margin="20,0,20,0"> <!-- L,T,R,B -->
         <Entry x:Name="email" 
                Placeholder="Email address" 
-               Keyboard="Email"/>
+               Keyboard="Email"
+               TextColor="{StaticResource greenishColour}"/>
         <Entry x:Name="password"
                Placeholder="Password"
                IsPassword="True"/>
         <Button x:Name="LoginButton"
                 Text="Log in"
                 Clicked="LoginButton_Clicked"
-                BackgroundColor="Crimson"
+                BackgroundColor="{StaticResource greenishColour}"
                 TextColor="DarkCyan"
                 Margin="0,50,0,0"
                 /> 
         <!-- margin can displace other elements - NB 4 arguments, to help with centreing -->
+        <!-- was BackgroundColor="Crimson"-->
     </StackLayout>
 
 </ContentPage>
