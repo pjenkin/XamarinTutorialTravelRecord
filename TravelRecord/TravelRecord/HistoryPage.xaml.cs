@@ -35,5 +35,16 @@ namespace TravelRecord
                 // conn.Close();                                   // NB remembering to close connection! - not needed if 'using' SQLiteConnection
             }   // end of 'using' statement block
         }
+
+        private void PostListView_ItemSelected(object sender, SelectedItemChangedEventArgs e)
+        {
+            // Could have referred to 'sender', but referring directly to element here
+            var selectedPost = postListView.SelectedItem as Post;       // cast and check for null drekly
+
+            if (selectedPost != null)
+            {
+                Navigation.PushAsync(new PostDetail(selectedPost));
+            }
+        }
     }
 }
