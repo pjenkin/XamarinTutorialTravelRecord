@@ -23,7 +23,15 @@ namespace TravelRecord.iOS
         public override bool FinishedLaunching(UIApplication app, NSDictionary options)
         {
             global::Xamarin.Forms.Forms.Init();
-            LoadApplication(new App());
+            // LoadApplication(new App());
+
+            // define the location of the db in terms of path
+            string dbName = "travel_db.sqlite";
+            string folderPath = System.IO.Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal), "..", "Library");    
+            string fullPath = System.IO.Path.Combine(folderPath, dbName);
+            // NB don't use Personal folder, for iOS (no save there allowed), instead use Library of Personal's parent's directory 
+
+            LoadApplication(new App(fullPath));
 
             return base.FinishedLaunching(app, options);
         }

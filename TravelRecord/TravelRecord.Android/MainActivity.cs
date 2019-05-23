@@ -6,6 +6,8 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using Android.OS;
+using Environment;
+using System.IO;
 
 namespace TravelRecord.Droid
 {
@@ -19,7 +21,15 @@ namespace TravelRecord.Droid
 
             base.OnCreate(savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
-            LoadApplication(new App());
+            // LoadApplication(new App());
+
+            // define the location of the db in terms of path
+            string dbName = "travel_db.sqlite";
+            string folderPath = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal);
+            string fullPath = System.IO.Path.Combine(folderPath, dbName);
+
+            LoadApplication(new App(fullPath));
+
 
         }
     }
