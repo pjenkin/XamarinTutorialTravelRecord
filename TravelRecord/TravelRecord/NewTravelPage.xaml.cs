@@ -29,25 +29,27 @@ namespace TravelRecord
                 // Id set automatically
             };          // NB initialising the new instance's members thus in a terminated-block
 
-            SQLiteConnection conn = new SQLiteConnection(App.DatabaseLocation);     
-            // use db location class member defined earlier in 6-49
-
-            conn.CreateTable<Post>();
-
-            int numRows = conn.Insert(post);  // type can also be used automatically to deduce to which table to insert
-
-            conn.Close();       // close the connection as well
-
-            if (numRows > 0)
+            using (SQLiteConnection conn = new SQLiteConnection(App.DatabaseLocation))
+                // Use db location class member defined earlier in 6-49
+                // Since SQLiteConnection (qv) is implementing IDisposable, we can, with a 'using' statement, 
+                // safely leave out connection.Close call as Dispose will be automatically called
             {
-                // diagnostic alert
-                DisplayAlert("Success", "Record successfully inserted", "OK");
-            }
-            else
-            {
-                DisplayAlert("Failure", "No record inserted", "OK");
-            }
+                conn.CreateTable<Post>();
 
+                int numRows = conn.Insert(post);  // type can also be used automatically to deduce to which table to insert
+
+                // conn.Close();       // close the connection as well - not needed if 'using' SQLiteConnection
+
+                if (numRows > 0)
+                {
+                    // diagnostic alert
+                    DisplayAlert("Success", "Record successfully inserted", "OK");
+                }
+                else
+                {
+                    DisplayAlert("Failure", "No record inserted", "OK");
+                }
+            }       // end of 'using' statement block
         }
     }
 }
