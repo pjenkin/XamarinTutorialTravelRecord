@@ -2,11 +2,20 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="TravelRecord.NewTravelPage">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Name="SaveToolbarItem" Text="Save"
+                     Clicked="SaveToolbarItem_Clicked"/>
+
+    </ContentPage.ToolbarItems>
+    
+    
     <ContentPage.Content>
         <StackLayout>
             <Label Text="Welcome to the New Travel Page!"
                 VerticalOptions="CenterAndExpand" 
                 HorizontalOptions="CenterAndExpand" />
+            <Entry x:Name="experienceDescriptionEntry"
+                   Placeholder="Write your experience"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

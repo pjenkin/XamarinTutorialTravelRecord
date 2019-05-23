@@ -11,21 +11,21 @@
         <Entry x:Name="email" 
                Placeholder="Email address" 
                Keyboard="Email"
-               TextColor="{StaticResource greenishColour}"/>
+               TextColor="{StaticResource eveningishColour}"/>
         <Entry x:Name="password"
                Placeholder="Password"
                IsPassword="True"/>
         <Button x:Name="LoginButton"
                 Text="Log in"
                 Clicked="LoginButton_Clicked"
-                BackgroundColor="{StaticResource greenishColour}"
+                BackgroundColor="{StaticResource eveningishColour}"
                 Margin="0,50,0,0"
                 Style="{StaticResource normalButton}"
                 />
         <Button x:Name="DummyButton"
                 Text="Log in"
                 Clicked="LoginButton_Clicked"
-                BackgroundColor="{StaticResource greenishColour}"
+                BackgroundColor="{StaticResource eveningishColour}"
                 Margin="0,50,0,0"
                 />
         <!-- margin can displace other elements - NB 4 arguments, to help with centreing -->
