@@ -7,12 +7,24 @@ namespace TravelRecord
 {
     public partial class App : Application
     {
+        public static string DatabaseLocation { get; set; } = string.Empty;
+
         public App()
         {
             InitializeComponent();
 
             //MainPage = new MainPage();
             MainPage = new NavigationPage(new MainPage());      // default entry point changed
+        }
+
+        public App(string databaseLocation)
+        {
+            InitializeComponent();
+
+            MainPage = new NavigationPage(new MainPage());      // default entry point changed
+
+            DatabaseLocation = databaseLocation;                // this will be different according to platform, but this variable available to all
+
         }
 
         protected override void OnStart()
