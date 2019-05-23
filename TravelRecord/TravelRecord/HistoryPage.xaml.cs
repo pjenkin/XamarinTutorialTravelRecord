@@ -30,6 +30,8 @@ namespace TravelRecord
                 conn.CreateTable<Post>();                       // create table (only) if non-existent
                 var posts = conn.Table<Post>().ToList();        // get list of Post objects (ie records)
 
+                postListView.ItemsSource = posts;               // set data context of ListView in xaml file (binding specified in xaml)
+
                 // conn.Close();                                   // NB remembering to close connection! - not needed if 'using' SQLiteConnection
             }   // end of 'using' statement block
         }
