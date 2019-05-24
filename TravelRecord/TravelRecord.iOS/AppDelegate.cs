@@ -23,7 +23,6 @@ namespace TravelRecord.iOS
         public override bool FinishedLaunching(UIApplication app, NSDictionary options)
         {
             global::Xamarin.Forms.Forms.Init();
-            // Xamarin.FormsMaps.Init();        // for old, superseded maps package
 
             // LoadApplication(new App());
 
