@@ -24,7 +24,9 @@ namespace TravelRecord.iOS
         {
             global::Xamarin.Forms.Forms.Init();
 
-            // LoadApplication(new App());
+            Xamarin.FormsMaps.Init();        // initialise map - also need to modeify  in Info.plist
+
+            // LoadApplication(new App());      // old boilerplate instantiation of App for iOS (see newer, with db parameter below)
 
             // define the location of the db in terms of path
             string dbName = "travel_db.sqlite";
