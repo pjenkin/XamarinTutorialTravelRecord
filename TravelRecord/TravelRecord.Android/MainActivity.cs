@@ -7,6 +7,7 @@ using Android.Views;
 using Android.Widget;
 using Android.OS;
 using System.IO;
+using Plugin.Permissions;
 
 namespace TravelRecord.Droid
 {
@@ -21,7 +22,12 @@ namespace TravelRecord.Droid
             base.OnCreate(savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
             Xamarin.FormsMaps.Init(this, savedInstanceState);       // Initialise maps, specifying activity & bundle - AndroidManifest.xml must be edited 
-            // LoadApplication(new App());              // boilerplate instantiation of 
+                                                                    // LoadApplication(new App());              // boilerplate instantiation of 
+
+            // use Plugin.Permissions (step 2 of 3 for Plugin.Permissions permissions plugin)
+            Plugin.CurrentActivity.CrossCurrentActivity.Current.Init(this, savedInstanceState);// Initialise permissions, specifying activity & bundle - AndroidManifest.xml must be edited 
+            // step 3 of 3 for Plugin.Permissions - in Info.plist, add 'Privacy-Calendars Usage', 'Privacy - Bluetooth Peripheral Usage Description'
+
 
             // define the location of the db in terms of path
             string dbName = "travel_db.sqlite";
@@ -30,7 +36,14 @@ namespace TravelRecord.Droid
 
             LoadApplication(new App(fullPath));
 
+          
+        }
 
+        // use Plugin.Permissions (step 1 of 3 for Plugin.Permissions permissions plugin)
+        public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Permission[] grantResults)
+        {
+            PermissionsImplementation.Current.OnRequestPermissionsResult(requestCode, permissions, grantResults);
+            base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
         }
     }
 }

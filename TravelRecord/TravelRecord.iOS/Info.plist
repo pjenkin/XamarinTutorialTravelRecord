@@ -38,5 +38,9 @@
 	<string>To show your location on the map</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>To show your location on the map</string>
+	<key>NSCalendarsUsageDescription</key>
+	<string>We need to access the calendars for the mapping app (shrug emoji??)</string>
+	<key>NSBluetoothPeripheralUsageDescription</key>
+	<string>We (may) need to access the Bluetooth facility for the mapping app (shrug emoji??)</string>
 </dict>
 </plist>
