@@ -20,7 +20,8 @@ namespace TravelRecord.Droid
 
             base.OnCreate(savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
-            // LoadApplication(new App());
+            Xamarin.FormsMaps.Init(this, savedInstanceState);       // Initialise maps, specifying activity & bundle - AndroidManifest.xml must be edited 
+            // LoadApplication(new App());              // boilerplate instantiation of 
 
             // define the location of the db in terms of path
             string dbName = "travel_db.sqlite";
