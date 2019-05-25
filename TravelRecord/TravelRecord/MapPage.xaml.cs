@@ -9,11 +9,16 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
+using Plugin.Geolocator;
+using Plugin.Geolocator.Abstractions;
+
 namespace TravelRecord
 {
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class MapPage : ContentPage
 	{
+        private bool hasLocationPermission = false;
+
 		public MapPage ()
 		{
 			InitializeComponent ();
@@ -47,6 +52,7 @@ namespace TravelRecord
                 }
                 if (status == PermissionStatus.Granted)
                 {
+                    hasLocationPermission = true;           // ready to get user's location
                     locationsMap.IsShowingUser = true;      // if all clear (permissions) show user on map (should be error-safe)
                 }
                 else
@@ -62,5 +68,61 @@ namespace TravelRecord
             }
         }
         /* what a load of *******s 7-62 */
+
+        protected async override void  OnAppearing()                 // had to be made async as await for StartListeningAsync added (7-63)
+        {
+            base.OnAppearing();
+
+            if (hasLocationPermission)
+            {
+                var locator = CrossGeolocator.Current;
+
+                locator.PositionChanged += Locator_PositionChanged;     // NB pressed TAB after '+=' to get event handler in auto-complete
+                // Add event handler to PositionChanged event (using += operator)
+                await locator.StartListeningAsync(TimeSpan.Zero, 100);
+                // Minimum time (n/a), minimum distance (100 metres) for change - could include heading and other settings
+                // By default, to conserve battery, device won't be listening for location changes - make un listen here
+            }
+
+            GetLocation();          // call bespoke geolocating method
+        }
+
+        protected override void OnDisappearing()            // 7-63
+        {
+            base.OnDisappearing();
+
+            CrossGeolocator.Current.StopListeningAsync();                           // turn off location detection to save battery
+            CrossGeolocator.Current.PositionChanged -= Locator_PositionChanged;     // unsubscribe from event handler added in OnAppearing (NB using '-=' operator)
+        }
+
+        // auto-complete-added event handler method in the event of a change in the user's,location
+        private void Locator_PositionChanged(object sender, Plugin.Geolocator.Abstractions.PositionEventArgs e)
+        {
+            // throw new NotImplementedException();     // boilerplate
+
+            MoveMap(e.Position);             // auto-completed signature parameter for event handler will already contain position arguments
+        }
+
+        // Bespoke method to set properties with location data using Geolocator plugin
+        private async void GetLocation()
+        {
+            if (hasLocationPermission)
+            {
+                var locator = CrossGeolocator.Current;
+                var position = await locator.GetPositionAsync();          // get user's location (if permission granted)
+
+                MoveMap(position);              // update map display if location received
+            }
+        }
+
+        // bespoke method for moving map (refactored here) 7-63
+        private void MoveMap(Position position)
+        {
+            var centre = new Xamarin.Forms.Maps.Position(position.Latitude, position.Longitude);
+            var span = new Xamarin.Forms.Maps.MapSpan(centre, 1, 1);        // 1 degree of lat & lng is the region to span around the centre
+
+            locationsMap.MoveToRegion(span);
+            // For region, supply region centre, and degrees of lat & lng to show as a region around/spanning centre
+        }
     }
 }
