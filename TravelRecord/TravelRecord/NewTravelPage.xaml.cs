@@ -9,6 +9,8 @@ using Xamarin.Forms.Xaml;
 
 using TravelRecord.Model;       // use Model defined by us earlier in 6-51
 using SQLite;
+using Plugin.Geolocator;
+using TravelRecord.Logic;
 
 namespace TravelRecord
 {
@@ -19,6 +21,17 @@ namespace TravelRecord
 		{
 			InitializeComponent ();
 		}
+
+        // override here - this called whenever page loaded by new user
+        protected async override void OnAppearing()
+        {
+            base.OnAppearing();
+
+            var locator = CrossGeolocator.Current;
+            var position = await locator.GetPositionAsync();
+
+            var venues = VenueLogic.GetVenues(position.Latitude, position.Longitude);
+        }
 
         private void SaveToolbarItem_Clicked(object sender, EventArgs e)
         {
