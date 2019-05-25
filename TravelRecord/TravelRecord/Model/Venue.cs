@@ -6,6 +6,9 @@ namespace TravelRecord.Model
 {
     public class VenueRoot
     {
+        public Meta meta { get; set; }                  // this member pasted in from Example class - will contain deserialised response data
+        public Response response { get; set; }          // this member pasted in from Example - will contain deserialised response data
+
         public static string GenerateURL(double latitude, double longitude)
         {
             string url = String.Format(Constants.VENUE_SEARCH, latitude, longitude, Constants.CLIENT_ID, Constants.CLIENT_SECRET, DateTime.Now.ToString("yyyyMMdd"));
@@ -13,14 +16,16 @@ namespace TravelRecord.Model
             return url;
         }
     }
-    /*
+    // All classes below pasted from http://jsonutils.com following processing of JSON data from FourSqure API Search endpoint
+
+    
     public class Meta
     {
         public int code { get; set; }
         public string requestId { get; set; }
     }
-    // not needed
-    */
+    // Used inside VenueRoot
+    
     public class LabeledLatLng
     {
         public string label { get; set; }
@@ -73,7 +78,7 @@ namespace TravelRecord.Model
 
     public class Response
     {
-        public IList<VenueRoot> venues { get; set; }
+        public IList<Venue> venues { get; set; }
         /*  public bool confident { get; set; } */ // not needed
     }
     /*
@@ -82,7 +87,7 @@ namespace TravelRecord.Model
         public Meta meta { get; set; }
         public Response response { get; set; }
     }
-    // not needed
+    // not needed - this is an example from JsonUtil of how to use pasted classes - properties meta & response pasted inside Venue root
     */
 
 
