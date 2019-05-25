@@ -16,6 +16,43 @@
                 HorizontalOptions="CenterAndExpand" />
             <Entry x:Name="experienceDescriptionEntry"
                    Placeholder="Write your experience"/>
+            <!-- Custom cell 8-70 -->
+            <ListView x:Name="venueListView"
+                      HorizontalOptions="FillAndExpand"
+                      Margin="20, 0">   <!-- no top/bottom margin -->
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <!-- Template for custom cell defined in here -->
+                            <Grid>
+                                <!-- 2x2 grid -->
+                                <Grid.ColumnDefinitions>
+                                    <!-- Width can be *, Auto or a number -->
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+                                
+                                <Label Text="{Binding name}"
+                                       FontAttributes="Bold"/>
+                                <!-- Zero indexed-->
+                                <Label Grid.Row="1"
+                                       TextColor="ForestGreen"
+                                       Text="{Binding location.address}"/>
+                                <Label Grid.Column="1"
+                                       Text="{Binding location.distance, StringFormat='{0} metres'}"/>
+                                <!-- No bottom-right element ie Row=1 & Column=1 -->
+                                <!-- use location member of Venue class from Venue.cs for location  -->
+                                <!-- ItemsSource set in cs file OnAppearing -->
+
+                            </Grid>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

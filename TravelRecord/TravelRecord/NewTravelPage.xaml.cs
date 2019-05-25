@@ -31,6 +31,7 @@ namespace TravelRecord
             var position = await locator.GetPositionAsync();
 
             var venues = await VenueLogic.GetVenues(position.Latitude, position.Longitude);
+            venueListView.ItemsSource = venues;
         }
 
         private void SaveToolbarItem_Clicked(object sender, EventArgs e)
