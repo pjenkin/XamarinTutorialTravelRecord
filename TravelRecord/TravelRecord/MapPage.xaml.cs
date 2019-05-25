@@ -9,8 +9,12 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
+using Xamarin.Forms.Maps;
+
 using Plugin.Geolocator;
 using Plugin.Geolocator.Abstractions;
+using SQLite;
+using TravelRecord.Model;
 
 namespace TravelRecord
 {
@@ -85,13 +89,58 @@ namespace TravelRecord
             }
 
             GetLocation();          // call bespoke geolocating method
+
+            using (SQLiteConnection conn = new SQLiteConnection(App.DatabaseLocation))     // use previously established location
+            // Since SQLiteConnection (qv) is implementing IDisposable, we can, with a 'using' statement, 
+            // safely leave out connection.Close call as Dispose will be automatically called
+            {
+                conn.CreateTable<Post>();                       // create table (only) if non-existent
+                var posts = conn.Table<Post>().ToList();        // get list of Post objects (ie records)
+
+                DisplayInMap(posts);                            // NB having typed a call, in VS CTRL+. will generate a signature
+            }   // end of 'using' statement block
         }
 
-        protected override void OnDisappearing()            // 7-63
+       
+
+        // besppoke method to loop through all posts 
+        private void DisplayInMap(List<Post> posts)
+        {
+            // throw new NotImplementedException();             // boilerplate
+            foreach(var post in posts)
+            {
+                try
+                {
+                    var position = new Xamarin.Forms.Maps.Position(post.Latitude, post.Longitude);      // shift map Position to record's lat/lng
+
+                    var pin = new Xamarin.Forms.Maps.Pin()
+                    // could have used namespace but this d'illustrate where stuff's from
+                    {                                         // initialise the map pin's details / parameters
+                        Type = PinType.SavedPin,            // type could be SearchResult, Generic &c
+                        Position = position,
+                        Label = post.VenueName,
+                        Address = post.Address
+                    };
+
+                    locationsMap.Pins.Add(pin);
+                }
+                catch (NullReferenceException nre)
+                {
+
+                }
+                catch (Exception e)
+                {
+
+                }
+            }
+
+        }
+
+        protected async override void OnDisappearing()            // 7-63 adjusted in 8-72
         {
             base.OnDisappearing();
 
-            CrossGeolocator.Current.StopListeningAsync();                           // turn off location detection to save battery
+            await CrossGeolocator.Current.StopListeningAsync();                           // turn off location detection to save battery
             CrossGeolocator.Current.PositionChanged -= Locator_PositionChanged;     // unsubscribe from event handler added in OnAppearing (NB using '-=' operator)
         }
 
@@ -116,7 +165,7 @@ namespace TravelRecord
         }
 
         // bespoke method for moving map (refactored here) 7-63
-        private void MoveMap(Position position)
+        private void MoveMap(Plugin.Geolocator.Abstractions.Position position)
         {
             var centre = new Xamarin.Forms.Maps.Position(position.Latitude, position.Longitude);
             var span = new Xamarin.Forms.Maps.MapSpan(centre, 1, 1);        // 1 degree of lat & lng is the region to span around the centre
