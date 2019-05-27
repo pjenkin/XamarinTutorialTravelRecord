@@ -28,8 +28,8 @@ namespace TravelRecord
 
                 var categories = (from p in postTable
                                   orderby p?.CategoryId
-                                  select p?.CategoryName).Distinct().ToList();
-                    // don't show duplicated category name values (null conditional added by PNJ)
+                                  select p?.CategoryName ?? "").Distinct().ToList();
+                    // don't show duplicated category name values (null conditional and coalescing added by PNJ)
 
                 postCountLabel.Text = postTable.Count.ToString();           // set text to number of posts
             }
