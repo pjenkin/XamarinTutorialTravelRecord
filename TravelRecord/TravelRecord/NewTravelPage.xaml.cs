@@ -49,8 +49,8 @@ namespace TravelRecord
                     // use new text entry box value for description (otherwise use deserialised JSON data fields from API response)
                     // Id set automatically
                     // CategoryId = selectedVenue.categories[0].id;        // just get first category - not safe way though
-                    CategoryId = firstCategory.id,
-                    CategoryName = selectedVenue.location.address,
+                    CategoryId = firstCategory?.id,                                     // PNJ null conditional operator
+                    CategoryName = firstCategory?.name ?? "No category name given",     // PNJ null conditional & coalescing operators
                     Address = selectedVenue.location.address,
                     Latitude = selectedVenue.location.lat,
                     Longitude = selectedVenue.location.lng,
