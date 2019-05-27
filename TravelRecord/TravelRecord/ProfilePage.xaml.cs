@@ -26,6 +26,11 @@ namespace TravelRecord
             {
                 var postTable = conn.Table<Post>().ToList();                // count posts in db
 
+                var categories = (from p in postTable
+                                  orderby p?.CategoryId
+                                  select p?.CategoryName).Distinct().ToList();
+                    // don't show duplicated category name values (null conditional added by PNJ)
+
                 postCountLabel.Text = postTable.Count.ToString();           // set text to number of posts
             }
         }
