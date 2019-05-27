@@ -42,6 +42,8 @@ namespace TravelRecord
                     categoriesCount.Add(category, count);                   // add dictionary entry
                 }
 
+                categoriesListView.ItemsSource = categoriesCount;           // link listview to query results (binding of data declared in xaml)
+
                 postCountLabel.Text = postTable.Count.ToString();           // set text to number of posts
             }
         }

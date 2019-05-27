@@ -13,11 +13,13 @@
                    HorizontalOptions="Center"
                    TextColor="LightGray"/>
             <ListView x:Name="categoriesListView">
-<!--                <DataTemplate>
-                    <ViewCell>
-                        
-                    </ViewCell>
-                </DataTemplate> -->
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <TextCell Text="{Binding Path=Key}"
+                                Detail="{Binding Path=Value}">
+                        </TextCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
             </ListView>
         </StackLayout>
     </ContentPage.Content>
