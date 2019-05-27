@@ -29,17 +29,24 @@ namespace TravelRecord
                 var categories = (from p in postTable
                                   orderby p?.CategoryId
                                   select p?.CategoryName ?? "No category given").Distinct().ToList();
-                // don't show duplicated category name values (null conditional and coalescing added by PNJ)
+                // Don't show duplicated category name values (null conditional and coalescing added by PNJ)
+
+                // Alternative syntax (arrow/anonymous/lambda syntax)
+                var categoriesLambda = postTable.OrderBy(p => p?.CategoryId).Distinct().ToList();
 
                 Dictionary<string, int> categoriesCount = new Dictionary<string, int>();        // make key/value dictionary of tally counts of categories
 
                 foreach(var category in categories)
-                {
-                    var count = (from post in postTable
+                    {
+                        var count = (from post in postTable
                                  where post.CategoryName == category
                                  select post).ToList().Count;               // LINQ used to count
 
-                    categoriesCount.Add(category, count);                   // add dictionary entry
+                    // Alternative arrow/anonymous/lambda syntax 10-80
+                    var countLambda = postTable.Where(p => p.CategoryName == category).ToList().Count;
+
+                    // categoriesCount.Add(category, count);                   // add dictionary entry
+                    categoriesCount.Add(category, countLambda);                   // add dictionary entry
                 }
 
                 categoriesListView.ItemsSource = categoriesCount;           // link listview to query results (binding of data declared in xaml)
