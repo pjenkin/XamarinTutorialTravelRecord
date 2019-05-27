@@ -15,6 +15,7 @@ namespace TravelRecord.iOS
             // if you want to use a different Application Delegate class from "AppDelegate"
             // you can specify it here.
             UIApplication.Main(args, null, "AppDelegate");
+            // TODO: might need to add error handling in case Geolocator not working (might throw error)
         }
     }
 }
