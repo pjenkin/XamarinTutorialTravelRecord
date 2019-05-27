@@ -175,4 +175,49 @@
       <Name>TravelRecord</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\user3x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\add.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\add2x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\add3x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\home.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\home2x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\home3x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\map.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\map2x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\map3x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\save.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\save2x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\save3x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\user.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\user2x.png" />
+  </ItemGroup>
 </Project>
