@@ -12,6 +12,10 @@ namespace TravelRecord
         public MainPage()
         {
             InitializeComponent();
+
+            var assembly = typeof(MainPage);    // prepare to set image source (9-73) (as soon as page formed)
+            iconImage.Source = ImageSource.FromResource("TravelRecord.Assets.Images.pin_icon.png", assembly);
+
         }
 
         private void LoginButton_Clicked(object sender, EventArgs e)

@@ -27,8 +27,9 @@ namespace TravelRecord
 		{
 			InitializeComponent ();
 
-            GetPermissions();               // use our highfalutin chinwaggin permissions-laden method below (7-62)
-		}
+            GetPermissions();                   // use our highfalutin chinwaggin permissions-laden method below (7-62)
+            
+        }
 
 
         // all of this just to use a Plugin.Permissions so as to get around some Android 6+ problem?? 7-62
@@ -103,7 +104,7 @@ namespace TravelRecord
 
        
 
-        // besppoke method to loop through all posts 
+        // bespoke method to loop through all posts 
         private void DisplayInMap(List<Post> posts)
         {
             // throw new NotImplementedException();             // boilerplate
@@ -133,7 +134,6 @@ namespace TravelRecord
 
                 }
             }
-
         }
 
         protected async override void OnDisappearing()            // 7-63 adjusted in 8-72
