@@ -31,8 +31,8 @@ namespace TravelRecord
                                   select p?.CategoryName ?? "No category given").Distinct().ToList();
                 // Don't show duplicated category name values (null conditional and coalescing added by PNJ)
 
-                // Alternative syntax (arrow/anonymous/lambda syntax)
-                var categoriesLambda = postTable.OrderBy(p => p?.CategoryId).Distinct().ToList();
+                // Alternative syntax (arrow/anonymous/lambda syntax) - NB 'select' in LINQ to get 'CategoryName' string not whole record
+                var categoriesLambda = postTable.OrderBy(p => p?.CategoryId).Select(p=>p?.CategoryName).Distinct().ToList();
 
                 Dictionary<string, int> categoriesCount = new Dictionary<string, int>();        // make key/value dictionary of tally counts of categories
 
@@ -43,7 +43,7 @@ namespace TravelRecord
                                  select post).ToList().Count;               // LINQ used to count
 
                     // Alternative arrow/anonymous/lambda syntax 10-80
-                    var countLambda = postTable.Where(p => p.CategoryName == category).ToList().Count;
+                    var countLambda = postTable.Where(p => p?.CategoryName == category).ToList().Count;
 
                     // categoriesCount.Add(category, count);                   // add dictionary entry
                     categoriesCount.Add(category, countLambda);                   // add dictionary entry
