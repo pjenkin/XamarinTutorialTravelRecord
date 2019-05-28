@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.WindowsAzure.MobileServices;
+using System;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -8,6 +9,9 @@ namespace TravelRecord
     public partial class App : Application
     {
         public static string DatabaseLocation { get; set; } = string.Empty;
+
+        // Azure code
+        public static MobileServiceClient MobileService = new MobileServiceClient("https://travelrecord-pnj.azurewebsites.net");
 
         public App()
         {

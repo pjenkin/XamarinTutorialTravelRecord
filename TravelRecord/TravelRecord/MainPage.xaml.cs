@@ -34,5 +34,10 @@ namespace TravelRecord
                 Navigation.PushAsync(new HomePage());       // cf segue & intent - will allow back navigation too via navigation bar on screen
             }
         }
+
+        private void RegisterUserButton_Clicked(object sender, EventArgs e)
+        {
+            Navigation.PushAsync(new RegisterPage());       // segue to register page
+        }
     }
 }

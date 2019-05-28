@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="TravelRecord.RegisterPage">
+    <ContentPage.Content>
+        <StackLayout VerticalOptions="Center"
+                 Margin="20,0,20,0">
+            <!-- L,T,R,B -->
+
+            <Entry x:Name="email" 
+               Placeholder="Email address" 
+               Keyboard="Email"
+               TextColor="{StaticResource eveningishColour}"/>
+            <Entry x:Name="password"
+               Placeholder="Password"
+               IsPassword="True"
+                TextColor="{StaticResource wheatleColour}"/>
+            <Entry x:Name="confirmPasswordEntry"
+               Placeholder="Confirm Password"
+               IsPassword="True"
+                TextColor="{StaticResource wheatleColour}" />
+                <Button x:Name="registerButton"
+                Text="Log in"
+                Clicked="RegisterButton_Clicked"
+                BackgroundColor="{StaticResource eveningishColour}"
+                Margin="0,50,0,0"
+                Style="{StaticResource normalButton}"
+                />
+            <Button x:Name="DummyButton"
+                Text="Log in"
+                Clicked="LoginButton_Clicked"
+                BackgroundColor="{StaticResource eveningishColour}"
+                Margin="0,50,0,0"
+                />
+            <!-- margin can displace other elements - NB 4 arguments, to help with centreing -->
+            <!-- was BackgroundColor="Crimson"-->
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
