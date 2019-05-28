@@ -8,7 +8,9 @@ namespace TravelRecord.Model
     public class Post
     {
         [PrimaryKey, AutoIncrement]
-        public int Id { get; set; }
+        //public int Id { get; set; }                 // might need to be GUID to match Azure ID type 
+        public Guid Id { get; set; }                 // might need to be GUID to match Azure ID type 
+
 
         [MaxLength(250)]
         public string ExperienceDescription { get; set; }        
@@ -28,7 +30,8 @@ namespace TravelRecord.Model
 
         public int Distance { get; set; }
 
+        public Guid UserId { get; set; }                // read from Azure db table
 
-        // I'm not sure why we don't just have a Venue ID, CategoryID &c in here (TODO??)
+        // I'm not sure why we don't just have a Venue ID, CategoryID &c in here, relational-style (TODO??)
     }
 }

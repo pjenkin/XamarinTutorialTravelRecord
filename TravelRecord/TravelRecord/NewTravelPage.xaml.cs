@@ -34,7 +34,7 @@ namespace TravelRecord
             venueListView.ItemsSource = venues;
         }
 
-        private void SaveToolbarItem_Clicked(object sender, EventArgs e)
+        private async void SaveToolbarItem_Clicked(object sender, EventArgs e)
         {
             try
             { 
@@ -55,10 +55,10 @@ namespace TravelRecord
                     Latitude = selectedVenue.location.lat,
                     Longitude = selectedVenue.location.lng,
                     Distance = selectedVenue.location.distance,
-                    VenueName = selectedVenue.name
-
+                    VenueName = selectedVenue.name,
+                    UserId = App.user.Id                                    // set the app's current user to Azure-cloud-stored ID
                 };          // NB initialising the new instance's members thus in a terminated-block
-
+/*
                 using (SQLiteConnection conn = new SQLiteConnection(App.DatabaseLocation))
                 // Use db location class member defined earlier in 6-49
                 // Since SQLiteConnection (qv) is implementing IDisposable, we can, with a 'using' statement, 
@@ -80,14 +80,22 @@ namespace TravelRecord
                         DisplayAlert("Failure", "No record inserted", "OK");
                     }
                 }       // end of 'using' statement block
+*/
+// No longer using SQLite after switching to Azure in 11-89
+
+            // insert record to Azure db Posts table (having already gotten foreign key for ID from User table)
+            await App.MobileService.GetTable<Post>().InsertAsync(post);
+            await DisplayAlert("Success", "Record successfully inserted", "OK");
+
+
             }
             catch (NullReferenceException nre)      // e.g. in case there's no category (null)
             {
-
+                DisplayAlert("Failure", "No record inserted", "OK");
             }
             catch (Exception ex)                // for more general exceptions that specifically null exceptions
             {
-
+                DisplayAlert("Failure", "No record inserted", "OK");
             }
         } 
     }

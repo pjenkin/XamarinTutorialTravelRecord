@@ -35,8 +35,10 @@ namespace TravelRecord
                 // Retrieve the User table from the Azure db, but only the specific user's record, if existent
                 var user = (await App.MobileService.GetTable<User>().Where(usr => usr.Email == email.Text).ToListAsync()).FirstOrDefault();
 
-                if (user != null)
+                if (user != null)       // if user existent
                 {
+
+                    App.user = user;                // set the app's current user to Azure-cloud-stored ID
                     if (user.Password == password.Text)
                     {
                         await Navigation.PushAsync(new HomePage());       // cf segue & intent - will allow back navigation too via navigation bar on screen
