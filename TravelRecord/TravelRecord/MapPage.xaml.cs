@@ -90,22 +90,28 @@ namespace TravelRecord
             }
 
             GetLocation();          // call bespoke geolocating method
+                                    /*
+                                                using (SQLiteConnection conn = new SQLiteConnection(App.DatabaseLocation))     // use previously established location
+                                                // Since SQLiteConnection (qv) is implementing IDisposable, we can, with a 'using' statement, 
+                                                // safely leave out connection.Close call as Dispose will be automatically called
+                                                {
+                                                    conn.CreateTable<Post>();                       // create table (only) if non-existent
+                                                    var posts = conn.Table<Post>().ToList();        // get list of Post objects (ie records)
 
-            using (SQLiteConnection conn = new SQLiteConnection(App.DatabaseLocation))     // use previously established location
-            // Since SQLiteConnection (qv) is implementing IDisposable, we can, with a 'using' statement, 
-            // safely leave out connection.Close call as Dispose will be automatically called
-            {
-                conn.CreateTable<Post>();                       // create table (only) if non-existent
-                var posts = conn.Table<Post>().ToList();        // get list of Post objects (ie records)
-
-                DisplayInMap(posts);                            // NB having typed a call, in VS CTRL+. will generate a signature
-            }   // end of 'using' statement block
+                                                    DisplayInMap(posts);                            // NB having typed a call, in VS CTRL+. will generate a signature
+                                                }   // end of 'using' statement block
+*/
+             var posts = await App.MobileService.GetTable<Post>().Where(p => p.UserId == App.user.Id).ToListAsync();
+            DisplayInMap(posts);
         }
+                                    
+// From 11-91 no longer using local SQLite - using Azure cloud db instead
 
-       
 
-        // bespoke method to loop through all posts 
-        private void DisplayInMap(List<Post> posts)
+
+
+            // bespoke method to loop through all posts 
+            private void DisplayInMap(List<Post> posts)
         {
             // throw new NotImplementedException();             // boilerplate
             foreach(var post in posts)

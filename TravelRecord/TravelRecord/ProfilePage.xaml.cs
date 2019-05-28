@@ -18,13 +18,21 @@ namespace TravelRecord
 			InitializeComponent ();
 		}
 
-        protected override void OnAppearing()
+        protected async override void OnAppearing()
         {
             base.OnAppearing();
+/*
+                        using (SQLiteConnection conn = new SQLiteConnection(App.DatabaseLocation))      // use database location static variable of App class
+                        {
+             var postTable = conn.Table<Post>().ToList();                // count posts in db           
+*/
+            // From 11-91 no longer using local SQLite - using Azure cloud db instead
 
-            using (SQLiteConnection conn = new SQLiteConnection(App.DatabaseLocation))      // use database location static variable of App class
-            {
-                var postTable = conn.Table<Post>().ToList();                // count posts in db
+
+            var postTable = await App.MobileService.GetTable<Post>().Where(p => p.UserId == App.user.Id).ToListAsync();
+            // count the number of posts for this user
+
+
 
                 var categories = (from p in postTable
                                   orderby p?.CategoryId
@@ -52,7 +60,8 @@ namespace TravelRecord
                 categoriesListView.ItemsSource = categoriesCount;           // link listview to query results (binding of data declared in xaml)
 
                 postCountLabel.Text = postTable.Count.ToString();           // set text to number of posts
-            }
+  /*          }
+   */          
         }
     }
 
