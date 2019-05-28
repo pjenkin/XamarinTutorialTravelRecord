@@ -8,6 +8,7 @@ using Android.Widget;
 using Android.OS;
 using System.IO;
 using Plugin.Permissions;
+using Microsoft.WindowsAzure.MobileServices;
 
 namespace TravelRecord.Droid
 {
@@ -23,6 +24,8 @@ namespace TravelRecord.Droid
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
             Xamarin.FormsMaps.Init(this, savedInstanceState);       // Initialise maps, specifying activity & bundle - AndroidManifest.xml must be edited 
                                                                     // LoadApplication(new App());              // boilerplate instantiation of 
+            // Azure code 11-86
+            CurrentPlatform.Init();
 
             // use Plugin.Permissions (step 2 of 3 for Plugin.Permissions permissions plugin)
             Plugin.CurrentActivity.CrossCurrentActivity.Current.Init(this, savedInstanceState);// Initialise permissions, specifying activity & bundle - AndroidManifest.xml must be edited 

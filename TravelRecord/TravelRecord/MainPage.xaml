@@ -30,9 +30,10 @@
                 />
         <Button x:Name="registerUserButton"
                 Text="Register"
-                HorizontalOptions="End"
                 BackgroundColor="{StaticResource eveningishColour}"
+                Margin="0,50,0,0"                
                 Clicked="RegisterUserButton_Clicked"
+                Style="{StaticResource normalButton}"                
                 />
         <!-- margin can displace other elements - NB 4 arguments, to help with centreing -->
         <!-- was BackgroundColor="Crimson"-->

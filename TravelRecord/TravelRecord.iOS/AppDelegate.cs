@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 
 using Foundation;
+using Microsoft.WindowsAzure.MobileServices;
 using UIKit;
 
 namespace TravelRecord.iOS
@@ -25,6 +26,9 @@ namespace TravelRecord.iOS
             global::Xamarin.Forms.Forms.Init();
 
             Xamarin.FormsMaps.Init();        // initialise map - also need to modeify  in Info.plist
+
+            // Azure code 11-86
+            CurrentPlatform.Init();
 
             // LoadApplication(new App());      // old boilerplate instantiation of App for iOS (see newer, with db parameter below)
 

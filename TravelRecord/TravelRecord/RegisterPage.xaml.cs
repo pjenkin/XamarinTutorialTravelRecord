@@ -28,5 +28,10 @@ namespace TravelRecord
                 DisplayAlert("Error", "Passwords don't match", "OK");
             }
         }
+
+        private void DummyButton_Clicked(object sender, EventArgs e)
+        {
+
+        }
     }
 }
