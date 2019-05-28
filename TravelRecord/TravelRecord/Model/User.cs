@@ -7,7 +7,7 @@ namespace TravelRecord.Model
     // class to represent a user
     public class User
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }        // Azure ID column holding alphanumeric values
 
         public string Email { get; set; }
 

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TravelRecord.Model;
 using Xamarin.Forms;
 
 namespace TravelRecord
@@ -18,7 +19,7 @@ namespace TravelRecord
 
         }
 
-        private void LoginButton_Clicked(object sender, EventArgs e)
+        private async void LoginButton_Clicked(object sender, EventArgs e)
         {
             //string password = password.Text;
             //string password = password.Text;
@@ -29,9 +30,27 @@ namespace TravelRecord
             {
 
             }
-            else
+            else          // if password check worth doing
             {
-                Navigation.PushAsync(new HomePage());       // cf segue & intent - will allow back navigation too via navigation bar on screen
+                // Retrieve the User table from the Azure db, but only the specific user's record, if existent
+                var user = (await App.MobileService.GetTable<User>().Where(usr => usr.Email == email.Text).ToListAsync()).FirstOrDefault();
+
+                if (user != null)
+                {
+                    if (user.Password == password.Text)
+                    {
+                        await Navigation.PushAsync(new HomePage());       // cf segue & intent - will allow back navigation too via navigation bar on screen
+                    }
+                    else
+                    {
+                        await DisplayAlert("Error", "Email or password are incorrect", "OK");
+                    }
+                }
+                else
+                {
+                    await DisplayAlert("Error", "There was an error while logging you in", "OK");
+
+                }
             }
         }
 
