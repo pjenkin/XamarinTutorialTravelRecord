@@ -31,6 +31,7 @@ namespace TravelRecord
                 };
 
                 await App.MobileService.GetTable<User>().InsertAsync(user);
+                // User table name and type used to identify (easy)table within Azure db - class used to populate fields
             }
             else
             {
