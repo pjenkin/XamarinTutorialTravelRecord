@@ -9,7 +9,8 @@ namespace TravelRecord.Model
     {
         [PrimaryKey, AutoIncrement]
         //public int Id { get; set; }                 // might need to be GUID to match Azure ID type 
-        public Guid Id { get; set; }                 // might need to be GUID to match Azure ID type 
+        //public Guid Id { get; set; }                 // might need to be GUID to match Azure ID type 
+        public string Id { get; set; }                 // might need to be GUID to match Azure ID type 
 
 
         [MaxLength(250)]
@@ -30,7 +31,9 @@ namespace TravelRecord.Model
 
         public int Distance { get; set; }
 
-        public Guid UserId { get; set; }                // read from Azure db table
+        //public Guid UserId { get; set; }                // read from Azure db table
+        public string UserId { get; set; }                // read from Azure db table
+        // Be very cautious using Guids viz strings - Guids can mess things up (perhaps with Azure lambda expressions for sure)
 
         // I'm not sure why we don't just have a Venue ID, CategoryID &c in here, relational-style (TODO??)
     }
