@@ -58,33 +58,34 @@ namespace TravelRecord
                     VenueName = selectedVenue.name,
                     UserId = App.user.Id                                    // set the app's current user to Azure-cloud-stored ID
                 };          // NB initialising the new instance's members thus in a terminated-block
-/*
-                using (SQLiteConnection conn = new SQLiteConnection(App.DatabaseLocation))
-                // Use db location class member defined earlier in 6-49
-                // Since SQLiteConnection (qv) is implementing IDisposable, we can, with a 'using' statement, 
-                // safely leave out connection.Close call as Dispose will be automatically called
-                {
-                    conn.CreateTable<Post>();
+                            /*
+                                            using (SQLiteConnection conn = new SQLiteConnection(App.DatabaseLocation))
+                                            // Use db location class member defined earlier in 6-49
+                                            // Since SQLiteConnection (qv) is implementing IDisposable, we can, with a 'using' statement, 
+                                            // safely leave out connection.Close call as Dispose will be automatically called
+                                            {
+                                                conn.CreateTable<Post>();
 
-                    int numRows = conn.Insert(post);  // type can also be used automatically to deduce to which table to insert
+                                                int numRows = conn.Insert(post);  // type can also be used automatically to deduce to which table to insert
 
-                    // conn.Close();       // close the connection as well - not needed if 'using' SQLiteConnection
+                                                // conn.Close();       // close the connection as well - not needed if 'using' SQLiteConnection
 
-                    if (numRows > 0)
-                    {
-                        // diagnostic alert
-                        DisplayAlert("Success", "Record successfully inserted", "OK");
-                    }
-                    else
-                    {
-                        DisplayAlert("Failure", "No record inserted", "OK");
-                    }
-                }       // end of 'using' statement block
-*/
-// No longer using SQLite after switching to Azure in 11-89
+                                                if (numRows > 0)
+                                                {
+                                                    // diagnostic alert
+                                                    DisplayAlert("Success", "Record successfully inserted", "OK");
+                                                }
+                                                else
+                                                {
+                                                    DisplayAlert("Failure", "No record inserted", "OK");
+                                                }
+                                            }       // end of 'using' statement block
+                            */
+                            // No longer using SQLite after switching to Azure in 11-89
 
-            // insert record to Azure db Posts table (having already gotten foreign key for ID from User table)
-            await App.MobileService.GetTable<Post>().InsertAsync(post);
+                // insert record to Azure db Posts table (having already gotten foreign key for ID from User table)
+                //await App.MobileService.GetTable<Post>().InsertAsync(post);
+            Post.Insert(post);      // refactored to MVVM
             await DisplayAlert("Success", "Record successfully inserted", "OK");
 
 

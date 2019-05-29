@@ -1,5 +1,8 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
+using System.Net.Http;
+using System.Threading.Tasks;
 using TravelRecord.Helpers;     // We defined Constants class in here 8-65
 
 namespace TravelRecord.Model
@@ -74,6 +77,34 @@ namespace TravelRecord.Model
         public IList<Category> categories { get; set; }
         public string referralId { get; set; }
         public bool hasPerk { get; set; }
+
+        /// <summary>
+        /// Get list of nearby venues from FourSquare search API
+        /// Refactored inside Venue class for MVVM
+        /// </summary>
+        /// <param name="latitude"></param>
+        /// <param name="longitude"></param>
+        /// <returns></returns>
+        public async static Task<List<Venue>> GetVenues(double latitude, double longitude)      // return a list of Venues, for a given location
+        {       // had to be static as 'await' used below, and had to be Task<> as returning non-void in an async
+            List<Venue> venues = new List<Venue>();
+
+            var url = VenueRoot.GenerateURL(latitude, longitude);
+
+            using (HttpClient client = new HttpClient())
+            {
+                var response = await client.GetAsync(url);
+                var json = await response.Content.ReadAsStringAsync();
+
+                var venueRoot = JsonConvert.DeserializeObject<VenueRoot>(json);
+                // Use NewtonSoft JSON plugin to deserialize await'd json response
+
+                venues = venueRoot.response.venues as List<Venue>;      // here will be a list of Venue objects
+            }
+
+            return venues;
+        }
+
     }
 
     public class Response
@@ -89,7 +120,5 @@ namespace TravelRecord.Model
     }
     // not needed - this is an example from JsonUtil of how to use pasted classes - properties meta & response pasted inside Venue root
     */
-
-
 
 }

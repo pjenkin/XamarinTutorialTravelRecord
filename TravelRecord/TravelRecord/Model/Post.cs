@@ -36,5 +36,16 @@ namespace TravelRecord.Model
         // Be very cautious using Guids viz strings - Guids can mess things up (perhaps with Azure lambda expressions for sure)
 
         // I'm not sure why we don't just have a Venue ID, CategoryID &c in here, relational-style (TODO??)
+
+        /// <summary>
+        /// Insert a post to the db
+        /// Refactored here for MVVM
+        /// Maybe DI should be used so that insertion could be to local or to cloud (TODO)
+        /// </summary>
+        /// <param name="post"></param>
+        public static async void Insert(Post post)
+        {
+            await App.MobileService.GetTable<Post>().InsertAsync(post);         // insert post - to Azure cloud db
+        }
     }
 }
