@@ -9,12 +9,12 @@
             <!-- L,T,R,B -->
             <!-- Binding context set in page constructor -->
             <Entry x:Name="email" 
-                Text="{Binding Email, Mode=TwoWay}}"
+                Text="{Binding Email, Mode=TwoWay}"
                Placeholder="Email address" 
                Keyboard="Email"
                TextColor="{StaticResource eveningishColour}"/>
             <Entry x:Name="password"
-                Text="{Binding Password, Mode=TwoWay}}"
+                Text="{Binding Password, Mode=TwoWay}"
                Placeholder="Password"
                IsPassword="True"
                 TextColor="{StaticResource wheatleColour}"/>
