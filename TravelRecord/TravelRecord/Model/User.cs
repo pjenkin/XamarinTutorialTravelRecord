@@ -136,7 +136,7 @@ namespace TravelRecord.Model
         /// <param name="propertyName"></param>
         private void OnPropertyChanged(string propertyName)
         {
-            PropertyChanged(this, new PropertyChangedEventArgs(propertyName);
+            PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
             // 'this' is 'sender' - 'propertyName' from setter
         }
 
