@@ -1,7 +1,9 @@
 ﻿using SQLite;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace TravelRecord.Model
 {
@@ -14,7 +16,7 @@ namespace TravelRecord.Model
 
 
         [MaxLength(250)]
-        public string ExperienceDescription { get; set; }        
+        public string ExperienceDescription { get; set; }
 
 
         public string VenueName { get; set; }
@@ -46,6 +48,49 @@ namespace TravelRecord.Model
         public static async void Insert(Post post)
         {
             await App.MobileService.GetTable<Post>().InsertAsync(post);         // insert post - to Azure cloud db
+        }
+
+        /// <summary>
+        /// Read list of posts (for a user recorded in the App object)
+        /// 
+        /// Refactored here for MVVM
+        /// </summary>
+        /// <returns></returns>
+        public static async Task<List<Post>> Read()
+        {
+            var posts = await App.MobileService.GetTable<Post>().Where(p => p.UserId == App.user.Id).ToListAsync();     // get posts filtered by user - from Azure cloud db
+            return posts;
+        }
+
+        /// <summary>
+        /// Return distinct dictionary of categories posted and number of times for each
+        /// TODO Check - not by user?
+        /// Refactored for MVVM
+        /// </summary>
+        /// <param name="posts"></param>
+        /// <returns></returns>
+        public static Dictionary<string, int> PostCategories(List<Post> posts)
+        {
+            var categories = (from p in posts
+                              orderby p?.CategoryId
+                              select p?.CategoryName ?? "No category given").Distinct().ToList();
+            // Don't show duplicated category name values (null conditional and coalescing added by PNJ)
+
+            // Alternative syntax (arrow/anonymous/lambda syntax) - NB 'select' in LINQ to get 'CategoryName' string not whole record
+            var categoriesLambda = posts.OrderBy(p => p?.CategoryId).Select(p => p?.CategoryName).Distinct().ToList();
+
+            Dictionary<string, int> categoriesCount = new Dictionary<string, int>();        // make key/value dictionary of tally counts of categories
+
+            foreach (var category in categories)
+            {
+                var count = (from post in posts
+                             where post.CategoryName == category
+                             select post).ToList().Count;               // LINQ used to count
+
+                categoriesCount.Add(category, count);                   // add dictionary entry
+            }
+
+            return categoriesCount;
         }
     }
 }

@@ -39,7 +39,8 @@ namespace TravelRecord
             // From 11-89 onwards, reading from Azure database not from local SQLite
 
 
-            var posts = await App.MobileService.GetTable<Post>().Where(p => p.UserId == App.user.Id).ToListAsync();
+            //var posts = await App.MobileService.GetTable<Post>().Where(p => p.UserId == App.user.Id).ToListAsync();
+            var posts = await Post.Read();          // Read posts for current user in App - refactored 12-95 for MVVM
             postListView.ItemsSource = posts;
 
         }

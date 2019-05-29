@@ -101,7 +101,9 @@ namespace TravelRecord
                                                     DisplayInMap(posts);                            // NB having typed a call, in VS CTRL+. will generate a signature
                                                 }   // end of 'using' statement block
 */
-             var posts = await App.MobileService.GetTable<Post>().Where(p => p.UserId == App.user.Id).ToListAsync();
+            // var posts = await App.MobileService.GetTable<Post>().Where(p => p.UserId == App.user.Id).ToListAsync();
+            // Refactored for MVVM in 12-95
+            var posts = await Post.Read();          // read posts for current user in App object
             DisplayInMap(posts);
         }
                                     

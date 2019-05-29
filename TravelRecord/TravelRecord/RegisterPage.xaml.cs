@@ -19,6 +19,7 @@ namespace TravelRecord
 
         private async void RegisterButton_Clicked(object sender, EventArgs e)
         {
+
             if (password.Text == confirmPasswordEntry.Text)
             {
                 // register the user
@@ -30,13 +31,17 @@ namespace TravelRecord
                     // Id filled in automatically
                 };
 
-                await App.MobileService.GetTable<User>().InsertAsync(user);
-                // User table name and type used to identify (easy)table within Azure db - class used to populate fields
+                // Refactored for MVVM in 12-95 - into User class
+                //await App.MobileService.GetTable<User>().InsertAsync(user);
+                User.Register(user);
             }
             else
             {
                 await DisplayAlert("Error", "Passwords don't match", "OK");
             }
+
+
+
         }
 
         private void DummyButton_Clicked(object sender, EventArgs e)
