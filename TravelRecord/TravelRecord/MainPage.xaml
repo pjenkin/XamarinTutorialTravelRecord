@@ -14,20 +14,24 @@
                HeightRequest="100"
                Margin="0,0,0,30"/>
 
-        <Entry x:Name="email" 
+        <Entry x:Name="email"
+               Text="{Binding Email, Mode=TwoWay}"
                Placeholder="Email address" 
                Keyboard="Email"
                TextColor="{StaticResource eveningishColour}"/>
         <Entry x:Name="password"
+               Text="{Binding Password, Mode=TwoWay}"
                Placeholder="Password"
                IsPassword="True"/>
         <Button x:Name="LoginButton"
                 Text="Log in"
-                Clicked="LoginButton_Clicked"
+                Command="{Binding LoginCommand}"
+                CommandParameter="{Binding User}"
                 BackgroundColor="{StaticResource eveningishColour}"
                 Margin="0,10,0,0"
                 Style="{StaticResource normalButton}"
                 />
+        <!-- Clicked="LoginButton_Clicked" removed on refactoring for ICommand -->
         <Button x:Name="registerUserButton"
                 Text="Register"
                 BackgroundColor="{StaticResource eveningishColour}"

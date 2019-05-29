@@ -4,12 +4,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TravelRecord.Model;
+using TravelRecord.ViewModel;
 using Xamarin.Forms;
 
 namespace TravelRecord
 {
     public partial class MainPage : ContentPage
     {
+
+        MainVM viewModel;                  // added in 12-103 for ViewModel refactoring
+
         public MainPage()
         {
             InitializeComponent();
@@ -17,6 +21,8 @@ namespace TravelRecord
             var assembly = typeof(MainPage);    // prepare to set image source (9-73) (as soon as page formed)
             iconImage.Source = ImageSource.FromResource("TravelRecord.Assets.Images.pin_icon.png", assembly);
 
+            viewModel = new MainVM();           // instantiate the ViewModel
+            BindingContext = viewModel;         // set the ViewModel to be the BindingContext for the XAML
         }
 
         private async void LoginButton_Clicked(object sender, EventArgs e)
@@ -58,6 +64,7 @@ namespace TravelRecord
             */
 
             // Refactored for MVVM in 12-95
+/*
             bool canLogin = await User.Login(email.Text, password.Text);
 
             if (canLogin)
@@ -68,6 +75,8 @@ namespace TravelRecord
             {
                 await DisplayAlert("Error", "Try again", "Ok");
             }
+*/
+// Refactored into in MainVM Login method as a command in 12-103
         }
 
         private void RegisterUserButton_Clicked(object sender, EventArgs e)
