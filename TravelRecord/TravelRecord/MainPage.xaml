@@ -35,10 +35,12 @@
         <Button x:Name="registerUserButton"
                 Text="Register"
                 BackgroundColor="{StaticResource eveningishColour}"
-                Margin="0,10,0,0"                
-                Clicked="RegisterUserButton_Clicked"
+                Margin="0,10,0,0"     
+                Command="{Binding RegisterNavigationCommand}"
                 Style="{StaticResource normalButton}"                
                 />
+
+        <!--    Clicked="RegisterUserButton_Clicked" refactored out 12-104-->
         <!-- margin can displace other elements - NB 4 arguments, to help with centreing -->
         <!-- was BackgroundColor="Crimson"-->
     </StackLayout>

@@ -21,8 +21,9 @@ namespace TravelRecord.ViewModel
             }
         }
 
-
-        public LoginCommand LoginCommand { get; set; }
+        // get and set so that can be used with Binding in XAML
+        public LoginCommand LoginCommand { get; set; }                              
+        public RegisterNavigationCommand RegisterNavigationCommand { get; set; }
 
         // full properties, for use in Binding & MVVM to update properties
 
@@ -65,6 +66,8 @@ namespace TravelRecord.ViewModel
         {
             User = new User();
             LoginCommand = new LoginCommand(this);
+            RegisterNavigationCommand = new RegisterNavigationCommand(this);        // 12-104
+            // MainVM (this) used to access Navigation command, inter alia
         }
 
         // bespoke command for login
@@ -91,6 +94,11 @@ namespace TravelRecord.ViewModel
             }
         }
 
+        // hand-written
+        public async void Navigate()
+        {
+            await App.Current.MainPage.Navigation.PushAsync(new RegisterPage());
+        }
 
     }
 }

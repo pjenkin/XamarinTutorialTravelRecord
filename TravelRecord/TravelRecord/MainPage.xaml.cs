@@ -78,10 +78,14 @@ namespace TravelRecord
 */
 // Refactored into in MainVM Login method as a command in 12-103
         }
+        /*
+                private void RegisterUserButton_Clicked(object sender, EventArgs e)
+                {
 
-        private void RegisterUserButton_Clicked(object sender, EventArgs e)
-        {
-            Navigation.PushAsync(new RegisterPage());       // segue to register page
-        }
+                    Navigation.PushAsync(new RegisterPage());       // segue to register page
+ 
+    }
+                   */
+        // refactored out 12-104
     }
 }
