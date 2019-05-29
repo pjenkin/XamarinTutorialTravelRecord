@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -7,14 +8,54 @@ using System.Threading.Tasks;
 namespace TravelRecord.Model
 {
     // class to represent a user
-    public class User
+    public class User : INotifyPropertyChanged          // NB INotifyPropertyChanged - CTRL+. to implement PropertyChanged
     {
-        //public Guid Id { get; set; }        // Azure ID column holding alphanumeric values
-        public string Id { get; set; }        // Azure ID column holding alphanumeric values
+        /*
+                //public Guid Id { get; set; }        // Azure ID column holding alphanumeric values
+                public string Id { get; set; }        // Azure ID column holding alphanumeric values
 
-        public string Email { get; set; }
+                public string Email { get; set; }
 
-        public string Password { get; set; }
+                public string Password { get; set; }
+        */
+        // Refatored in 12-98 in favour of full property declarations with setters for use with INotifyPropertyChanged
+
+        private string id;
+
+        public string Id
+        {
+            get { return id; }
+            set {
+                    id = value;
+                    OnPropertyChanged("Id");
+            }
+        }
+
+        private string email;
+
+        public string Email
+        {
+            get { return email; }
+            set {
+                email = value;
+                OnPropertyChanged("Email");
+            }
+        }
+
+
+        private string password;
+
+        public string Password
+        {
+            get { return password; }
+            set {
+                password = value;
+                OnPropertyChanged("Password");
+            }
+        }
+
+
+
 
         public User()
         {
@@ -31,6 +72,8 @@ namespace TravelRecord.Model
             Email = email;
             Password = password;
         }
+
+        public event PropertyChangedEventHandler PropertyChanged;       // from CTRL+. on INotifyPropertyChanged
 
         public static async Task<bool> Login(string email, string password)
         {
@@ -85,5 +128,17 @@ namespace TravelRecord.Model
                 await App.MobileService.GetTable<User>().InsertAsync(user);
                 // User table name and type used to identify (easy)table within Azure db - class used to populate fields
         }
+
+        /// <summary>
+        /// for INotifyPropertyChanged
+        /// hand-written
+        /// </summary>
+        /// <param name="propertyName"></param>
+        private void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged(this, new PropertyChangedEventArgs(propertyName);
+            // 'this' is 'sender' - 'propertyName' from setter
+        }
+
     }
 }

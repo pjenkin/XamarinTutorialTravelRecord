@@ -1,25 +1,26 @@
 ﻿using SQLite;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace TravelRecord.Model
 {
-    public class Post
+    public class Post : INotifyPropertyChanged          // NB 12-98 INotifyPropertyChanged (CTRL+./ALT+ENTER to implement interface)
     {
-        [PrimaryKey, AutoIncrement]
-        //public int Id { get; set; }                 // might need to be GUID to match Azure ID type 
-        //public Guid Id { get; set; }                 // might need to be GUID to match Azure ID type 
-        public string Id { get; set; }                 // might need to be GUID to match Azure ID type 
+        /*
+                [PrimaryKey, AutoIncrement]
+                //public int Id { get; set; }                 // might need to be GUID to match Azure ID type 
+                //public Guid Id { get; set; }                 // might need to be GUID to match Azure ID type 
+                public string Id { get; set; }                 // might need to be GUID to match Azure ID type 
 
 
-        [MaxLength(250)]
-        public string ExperienceDescription { get; set; }
+                [MaxLength(250)]
+                public string ExperienceDescription { get; set; }
 
-
-        public string VenueName { get; set; }
+                    public string VenueName { get; set; }
 
         public string CategoryId { get; set; }
 
@@ -35,6 +36,132 @@ namespace TravelRecord.Model
 
         //public Guid UserId { get; set; }                // read from Azure db table
         public string UserId { get; set; }                // read from Azure db table
+
+        */
+        // Refactored in 12-95 to alter setters for use with INotifyPropertyChanged
+        // propfull TAB TAB to snippet a full property definition (viz prop TAB TAB for syntactic sugar version) - NB set method defined boilerplate
+        // NB Upper Case for public prop, lower case for private prop
+        private string id;
+
+        public string Id
+        {
+            get { return id; }
+            set {
+                    id = value;
+                    OnPropertyChanged("Id");        // manually defined OnPropertyChanged for each property required
+                }
+        }
+
+        private string experienceDescription;
+
+        public string ExperienceDescription
+        {
+            get { return experienceDescription; }
+            set {
+                experienceDescription = value;
+                OnPropertyChanged("ExperienceDescription");
+            }
+        }
+
+        private string venueName;
+
+        public string VenueName
+        {
+            get { return venueName; }
+            set {
+                venueName = value;
+                OnPropertyChanged("VenueName");
+            }
+        }
+
+        private string categoryId;      // NB private & Public for each variable (with setter modified by hand)
+
+        public string CategoryId
+        {
+            get { return categoryId; }
+            set
+            {
+                categoryId = value;
+                OnPropertyChanged("CategoryId");
+            }
+        }
+
+        private string categoryName;
+
+        public string CategoryName
+        {
+            get { return categoryName; }
+            set
+            {
+                categoryName = value;
+                OnPropertyChanged("CategoryName");
+            }
+        }
+
+        private string address;
+
+        public string Address
+        {
+            get { return address; }
+            set
+            {
+                address = value;
+                OnPropertyChanged("Address");
+            }
+        }
+
+        private double latitude;
+
+        public double Latitude
+        {
+            get { return latitude; }
+            set
+            {
+                latitude = value;
+                OnPropertyChanged("Latitude");
+            }
+        }
+
+        private double longitude;
+
+        public double Longitude
+        {
+            get { return longitude; }
+            set
+            {
+                longitude = value;
+                OnPropertyChanged("Longitude");
+            }
+        }
+
+        private int distance;
+
+        public int Distance
+        {
+            get { return distance; }
+            set
+            {
+                distance = value;
+                OnPropertyChanged("Distance");
+            }
+        }
+
+        private string userId;
+
+        public string UserId
+        {
+            get { return userId; }
+            set
+            {
+                userId = value;
+                OnPropertyChanged("UserId");
+            }
+        }
+
+
+
+        public event PropertyChangedEventHandler PropertyChanged;       // this bit auto-completed from CTRL+. - use OnPropertyChanged (qv) to affect 'set' methods
+
         // Be very cautious using Guids viz strings - Guids can mess things up (perhaps with Azure lambda expressions for sure)
 
         // I'm not sure why we don't just have a Venue ID, CategoryID &c in here, relational-style (TODO??)
@@ -91,6 +218,17 @@ namespace TravelRecord.Model
             }
 
             return categoriesCount;
+        }
+
+        /// <summary>
+        /// Handler for Propertychanged
+        /// Hand-written
+        /// </summary>
+        /// <param name="propertyName"></param>
+        private void OnPropertyChanged(string propertyName)         // added by hand to work with altered 'set' methods, for INotifyPropertyChanged
+        {
+            PropertyChanged(this, new PropertyChangedEventArgs(propertyName));  // NB INotifyPropertyChanged implementation
+            // 'this' is the 'sender' parameter - propertyName from OnPropertyChanged value hand-added to set method of full property
         }
     }
 }
