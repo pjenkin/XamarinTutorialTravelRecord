@@ -7,7 +7,8 @@
     <TabbedPage.ToolbarItems>
         <ToolbarItem x:Name="AddToolbarItem" Text="Add"
                      Icon="add.png"
-                     Clicked="AddToolbarItem_Clicked"/>
+                     Command="{Binding NavCommand}"/>
+        <!-- Took out Clicked="AddToolbarItem_Clicked" for Command= while refactoring for ICommand/MVVM 12-102-->
     </TabbedPage.ToolbarItems>
 
     <local:HistoryPage Title="History"
