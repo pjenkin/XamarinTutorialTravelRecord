@@ -14,12 +14,19 @@ using TravelRecord.Logic;
 
 namespace TravelRecord
 {
+
+
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class NewTravelPage : ContentPage
     {
+        Post post;                                              // for use within NewTravelPage and for BindingContext of elements in page
+
         public NewTravelPage()
         {
             InitializeComponent();
+
+            post = new Post();
+            containerStackLayout.BindingContext = post;
         }
 
         // override here - this called whenever page loaded by new user
@@ -43,21 +50,23 @@ namespace TravelRecord
                 var firstCategory = selectedVenue.categories.FirstOrDefault();      // approved, safe, way of getting first of zero to many categories of venue
 
                 // insert Post record into db
-                Post post = new Post()
-                {
-                    ExperienceDescription = experienceDescriptionEntry.Text,
-                    // use new text entry box value for description (otherwise use deserialised JSON data fields from API response)
-                    // Id set automatically
-                    // CategoryId = selectedVenue.categories[0].id;        // just get first category - not safe way though
-                    CategoryId = firstCategory?.id,                                     // PNJ null conditional operator
-                    CategoryName = firstCategory?.name ?? "No category name given",     // PNJ null conditional & coalescing operators
-                    Address = selectedVenue.location.address,
-                    Latitude = selectedVenue.location.lat,
-                    Longitude = selectedVenue.location.lng,
-                    Distance = selectedVenue.location.distance,
-                    VenueName = selectedVenue.name,
-                    UserId = App.user.Id                                    // set the app's current user to Azure-cloud-stored ID
-                };          // NB initialising the new instance's members thus in a terminated-block
+                // Post post = new Post()           // not needed after refactoring for MVVM & Binding in 12-99
+                //{
+                // ExperienceDescription = experienceDescriptionEntry.Text,
+                // use new text entry box value for description (otherwise use deserialised JSON data fields from API response)
+                // ExperienceDescription via BindingContext after 12-99
+                // Set values using deserialised JSON data fields from API response
+                // Id set automatically
+                // CategoryId = selectedVenue.categories[0].id;        // just get first category - not safe way though
+                post.CategoryId = firstCategory?.id;                                     // PNJ null conditional operator
+                post.CategoryName = firstCategory?.name ?? "No category name given";     // PNJ null conditional & coalescing operators
+                post.Address = selectedVenue.location.address;
+                post.Latitude = selectedVenue.location.lat;
+                post.Longitude = selectedVenue.location.lng;
+                post.Distance = selectedVenue.location.distance;
+                post.VenueName = selectedVenue.name;
+                post.UserId = App.user.Id;                                    // set the app's current user to Azure-cloud-stored ID
+                // };          // NB initialising the new instance's members thus in a terminated-block
                             /*
                                             using (SQLiteConnection conn = new SQLiteConnection(App.DatabaseLocation))
                                             // Use db location class member defined earlier in 6-49

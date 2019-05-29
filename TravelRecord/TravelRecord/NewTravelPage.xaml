@@ -11,11 +11,12 @@
     
     
     <ContentPage.Content>
-        <StackLayout>
+        <StackLayout x:Name="containerStackLayout">
             <Label Text="Welcome to the New Travel Page!"
                 VerticalOptions="CenterAndExpand" 
                 HorizontalOptions="CenterAndExpand" />
             <Entry x:Name="experienceDescriptionEntry"
+                   Text="{Binding ExperienceDescription, Mode=TwoWay}"
                    Placeholder="Write your experience"/>
             <!-- Custom cell 8-70 -->
             <ListView x:Name="venueListView"

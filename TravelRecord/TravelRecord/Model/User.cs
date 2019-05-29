@@ -27,7 +27,7 @@ namespace TravelRecord.Model
             get { return id; }
             set {
                     id = value;
-                    OnPropertyChanged("Id");
+                    OnPropertyChanged("Id");    // fire event for this property
             }
         }
 
@@ -136,8 +136,11 @@ namespace TravelRecord.Model
         /// <param name="propertyName"></param>
         private void OnPropertyChanged(string propertyName)
         {
-            PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-            // 'this' is 'sender' - 'propertyName' from setter
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+                // 'this' is 'sender' - 'propertyName' from setter
+            }
         }
 
     }

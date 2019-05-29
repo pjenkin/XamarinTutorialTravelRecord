@@ -12,9 +12,14 @@ namespace TravelRecord
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class RegisterPage : ContentPage
     {
+        User user;                                          // for use with both BindingContext and for login to App
+
         public RegisterPage()
         {
             InitializeComponent();
+
+            user = new User();
+            containerStackLayout.BindingContext = user;     // set Binding context of User for XAML elements
         }
 
         private async void RegisterButton_Clicked(object sender, EventArgs e)
@@ -24,12 +29,16 @@ namespace TravelRecord
             {
                 // register the user
                 // register the user
+                
+                /*
                 User user = new User()
                 {
                     Email = email.Text,
                     Password = password.Text
                     // Id filled in automatically
                 };
+                // not needed after User declared for binding context in 12-99
+                */
 
                 // Refactored for MVVM in 12-95 - into User class
                 //await App.MobileService.GetTable<User>().InsertAsync(user);

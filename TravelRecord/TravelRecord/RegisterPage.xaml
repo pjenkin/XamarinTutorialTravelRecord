@@ -4,14 +4,17 @@
              x:Class="TravelRecord.RegisterPage">
     <ContentPage.Content>
         <StackLayout VerticalOptions="Center"
+                x:Name="containerStackLayout"
                  Margin="20,0,20,0">
             <!-- L,T,R,B -->
-
+            <!-- Binding context set in page constructor -->
             <Entry x:Name="email" 
+                Text="{Binding Email, Mode=TwoWay}}"
                Placeholder="Email address" 
                Keyboard="Email"
                TextColor="{StaticResource eveningishColour}"/>
             <Entry x:Name="password"
+                Text="{Binding Password, Mode=TwoWay}}"
                Placeholder="Password"
                IsPassword="True"
                 TextColor="{StaticResource wheatleColour}"/>

@@ -48,7 +48,7 @@ namespace TravelRecord.Model
             get { return id; }
             set {
                     id = value;
-                    OnPropertyChanged("Id");        // manually defined OnPropertyChanged for each property required
+                    OnPropertyChanged("Id");        // manually defined OnPropertyChanged for each property required - fire this event
                 }
         }
 
@@ -227,8 +227,11 @@ namespace TravelRecord.Model
         /// <param name="propertyName"></param>
         private void OnPropertyChanged(string propertyName)         // added by hand to work with altered 'set' methods, for INotifyPropertyChanged
         {
-            PropertyChanged(this, new PropertyChangedEventArgs(propertyName));  // NB INotifyPropertyChanged implementation
-            // 'this' is the 'sender' parameter - propertyName from OnPropertyChanged value hand-added to set method of full property
+            if (PropertyChanged != null)                            // to avoid exception if no listeners
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));  // NB INotifyPropertyChanged implementation
+                                                                                    // 'this' is the 'sender' parameter - propertyName from OnPropertyChanged value hand-added to set method of full property
+            }
         }
     }
 }
