@@ -19,16 +19,20 @@
                IsPassword="True"
                 TextColor="{StaticResource wheatleColour}"/>
             <Entry x:Name="confirmPasswordEntry"
+                Text="{Binding ConfirmPassword, Mode=TwoWay}"
                Placeholder="Confirm Password"
                IsPassword="True"
                 TextColor="{StaticResource wheatleColour}" />
                 <Button x:Name="registerButton"
                 Text="Register"
-                Clicked="RegisterButton_Clicked"
                 BackgroundColor="{StaticResource eveningishColour}"
                 Margin="0,50,0,0"
+                Command="{Binding RegisterCommand}"
+                CommandParameter="{Binding User}"
                 Style="{StaticResource normalButton}"
                 />
+
+            <!-- Refactoring Clicked="RegisterButton_Clicked" not needed as Command used 12-104 -->
             <!-- margin can displace other elements - NB 4 arguments, to help with centreing -->
             <!-- was BackgroundColor="Crimson"-->
         </StackLayout>

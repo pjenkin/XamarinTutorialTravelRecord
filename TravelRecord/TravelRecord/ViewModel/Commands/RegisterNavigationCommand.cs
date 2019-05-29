@@ -26,7 +26,7 @@ namespace TravelRecord.ViewModel.Commands
         public void Execute(object parameter)
         {
             // throw new NotImplementedException();
-            viewModel.Navigate();                       // use our ViewModel's Navigate method
+            viewModel.Navigate();                       // use our ViewModel's Navigate method to show the registration screen page
         }
     }
 }

@@ -54,6 +54,18 @@ namespace TravelRecord.Model
             }
         }
 
+        // NB Confirm Password added to User model so as to help with Binding and MVVM 12-104
+        private string confirmPassword;
+
+        public string ConfirmPassword
+        {
+            get { return confirmPassword; }
+            set
+            {
+                confirmPassword = value;
+                OnPropertyChanged("ConfirmPassword");
+            }
+        }
 
 
 
