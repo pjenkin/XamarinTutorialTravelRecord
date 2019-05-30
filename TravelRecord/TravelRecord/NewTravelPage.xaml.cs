@@ -11,6 +11,7 @@ using TravelRecord.Model;       // use Model defined by us earlier in 6-51
 using SQLite;
 using Plugin.Geolocator;
 using TravelRecord.Logic;
+using TravelRecord.ViewModel;
 
 namespace TravelRecord
 {
@@ -19,14 +20,27 @@ namespace TravelRecord
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class NewTravelPage : ContentPage
     {
-        Post post;                                              // for use within NewTravelPage and for BindingContext of elements in page
+        //Post post;                                              // for use within NewTravelPage and for BindingContext of elements in page
+        // post superseded as BindingContext in 12-105
+
+        NewTravelVM viewModel;
+
+        public bool AllowSaveButton = false;                     // workaround?bodge? - PNJ trying to get save Binding PostCommand button in NewTravelCommand working ok - shouldn't need this
 
         public NewTravelPage()
         {
             InitializeComponent();
 
-            post = new Post();
-            containerStackLayout.BindingContext = post;
+            // post = new Post();
+            //containerStackLayout.BindingContext = post;
+            // post superseded as BindingContext in 12-105
+
+            viewModel = new NewTravelVM();
+            BindingContext = viewModel;
+            // NB BindingContext (viewModel) now for entire page, not just for StackLayout...
+            // ... - must now set Binding of StackLayout only to Post (property of ViewModel) in XAML (qv) 12-105
+            AllowSaveButton = true;                          // set bodge/workaround flag for disabled (no CanExecute?) button at end of constructor - 12-105 
+            
         }
 
         // override here - this called whenever page loaded by new user
@@ -40,11 +54,14 @@ namespace TravelRecord
             var venues = await VenueLogic.GetVenues(position.Latitude, position.Longitude);
             venueListView.ItemsSource = venues;
         }
-
+    }
+}
+/*
         private async void SaveToolbarItem_Clicked(object sender, EventArgs e)
         {
             try
             { 
+  */              /*
                 var selectedVenue = venueListView.SelectedItem as Venue;    // get clicked Venue as object of Venue class
 
                 var firstCategory = selectedVenue.categories.FirstOrDefault();      // approved, safe, way of getting first of zero to many categories of venue
@@ -66,6 +83,8 @@ namespace TravelRecord
                 post.Distance = selectedVenue.location.distance;
                 post.VenueName = selectedVenue.name;
                 post.UserId = App.user.Id;                                    // set the app's current user to Azure-cloud-stored ID
+                */
+                // above refactored out in 12-105 for MVVM
                 // };          // NB initialising the new instance's members thus in a terminated-block
                             /*
                                             using (SQLiteConnection conn = new SQLiteConnection(App.DatabaseLocation))
@@ -94,6 +113,7 @@ namespace TravelRecord
 
                 // insert record to Azure db Posts table (having already gotten foreign key for ID from User table)
                 //await App.MobileService.GetTable<Post>().InsertAsync(post);
+/*
             Post.Insert(post);      // refactored to MVVM
             await DisplayAlert("Success", "Record successfully inserted", "OK");
 
@@ -109,4 +129,6 @@ namespace TravelRecord
             }
         } 
     }
+    
 }
+*/

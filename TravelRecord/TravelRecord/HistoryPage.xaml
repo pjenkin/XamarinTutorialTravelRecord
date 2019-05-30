@@ -8,7 +8,8 @@
             <!-- source set in the C# file -->
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <TextCell Text="{Binding ExperienceDescription}"/>
+                    <TextCell Text="{Binding ExperienceDescription}"
+                              />
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>

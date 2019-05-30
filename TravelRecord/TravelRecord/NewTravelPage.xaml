@@ -4,14 +4,22 @@
              x:Class="TravelRecord.NewTravelPage">
     <ContentPage.ToolbarItems>
         <ToolbarItem Name="SaveToolbarItem" Text="Save"                     
-                     Clicked="SaveToolbarItem_Clicked"
+                     Command="{Binding PostCommand}"
+                     CommandParameter="{Binding Post}"
+                     IsEnabled="{Binding AllowSaveButton}"
                      Icon="save.png"/>
-
+        <!--                     Command="{Binding PostCommand}"
+                     CommandParameter="{Binding Post}"/>  -->
+        <!-- Clicked="SaveToolbarItem_Clicked" superseded by Binding Command -->
+        <!-- This not working for me at mo, save button permanently disabled after initial CanExecute, hence IsEnabled and variable in code-behind constructor  -->
+        
+<!-- NB different BindingContexts for the whole page (cf xaml.cs), for each ToolbarItem, and for the StackLayout -->
     </ContentPage.ToolbarItems>
     
     
     <ContentPage.Content>
-        <StackLayout x:Name="containerStackLayout">
+        <StackLayout x:Name="containerStackLayout"
+                     BindingContext="{Binding Post}">
             <Label Text="Welcome to the New Travel Page!"
                 VerticalOptions="CenterAndExpand" 
                 HorizontalOptions="CenterAndExpand" />
@@ -20,6 +28,7 @@
                    Placeholder="Write your experience"/>
             <!-- Custom cell 8-70 -->
             <ListView x:Name="venueListView"
+                      SelectedItem="{Binding Venue, Mode=TwoWay}"
                       HorizontalOptions="FillAndExpand"
                       Margin="20, 0">   <!-- no top/bottom margin -->
                 <ListView.ItemTemplate>

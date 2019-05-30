@@ -1,4 +1,5 @@
-﻿using SQLite;
+﻿using Newtonsoft.Json;
+using SQLite;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -41,7 +42,10 @@ namespace TravelRecord.Model
         // Refactored in 12-95 to alter setters for use with INotifyPropertyChanged
         // propfull TAB TAB to snippet a full property definition (viz prop TAB TAB for syntactic sugar version) - NB set method defined boilerplate
         // NB Upper Case for public prop, lower case for private prop
-        private string id;
+        
+        // NB Full declaring properties, so as to be able to include firing an OnPropertyChanged event in 'set' method, for Binding and INotifyPropertyChanged
+
+        private string id;      // 'backing field' - private
 
         public string Id
         {
@@ -158,6 +162,47 @@ namespace TravelRecord.Model
             }
         }
 
+        // for 12-105, add a Venue property to make selectedVenue handling from a Command/ViewModel easier
+
+        private Venue venue;
+
+        [JsonIgnore ]           // from NewtonSoft.Json - to avoid error in Azure as doesn't like objects 
+        public Venue Venue
+        {
+            get { return venue; }
+            set {
+                venue = value;
+                // NB the order here
+                var firstCategory = venue.categories?.FirstOrDefault();      // approved, safe, way of getting first of zero to many categories of venue
+
+                // insert Post record into db
+                // Post post = new Post()           // not needed after refactoring for MVVM & Binding in 12-99
+                //{
+                // ExperienceDescription = experienceDescriptionEntry.Text,
+                // use new text entry box value for description (otherwise use deserialised JSON data fields from API response)
+                // ExperienceDescription via BindingContext after 12-99
+                // Set values using deserialised JSON data fields from API response
+                // Id set automatically
+                // CategoryId = venue.categories[0].id;        // just get first category - not safe way though
+                CategoryId = firstCategory?.id;                                     // PNJ null conditional operator
+                CategoryName = firstCategory?.name ?? "No category name given";     // PNJ null conditional & coalescing operators
+                if (venue.location != null)
+                {
+                    Address = venue.location.address;
+                    Latitude = venue.location.lat;
+                    Longitude = venue.location.lng;
+                    Distance = venue.location.distance;
+                }
+                    VenueName = venue?.name;
+                    UserId = App.user.Id;                                    // set the app's current user to Azure-cloud-stored ID
+                
+                // NB order here in set method - OnPropertyChanged *last*
+
+                OnPropertyChanged("Venue");        // hand enter this as per normal 
+            }
+        }
+
+  
 
 
         public event PropertyChangedEventHandler PropertyChanged;       // this bit auto-completed from CTRL+. - use OnPropertyChanged (qv) to affect 'set' methods
