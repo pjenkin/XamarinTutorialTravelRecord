@@ -1,7 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="TravelRecord.HistoryPage">
+             x:Class="TravelRecord.HistoryPage"
+             xmlns:converters="clr-namespace:TravelRecord.ViewModel.Converters">
+    <!-- NB namespace reference to *our own* IValueConverters 12-108 -->
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:DateTimeToStringConverter x:Key="converter"/>
+        </ResourceDictionary>
+
+    </ContentPage.Resources>
     <ContentPage.Content>
         <ListView x:Name="postListView"
                   ItemSelected="PostListView_ItemSelected">
@@ -9,7 +17,8 @@
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <TextCell Text="{Binding ExperienceDescription}"
-                              Detail="{Binding CREATEDAT, StringFormat='{0:d}'}"/>
+                              Detail="{Binding CREATEDAT, Converter={StaticResource converter}}"/>
+                    <!-- fomerly Detail="{Binding CREATEDAT, StringFormat='{0:d}'}" -->
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
