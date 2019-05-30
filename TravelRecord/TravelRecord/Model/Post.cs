@@ -202,7 +202,19 @@ namespace TravelRecord.Model
             }
         }
 
-  
+
+        // to correspond to CREATEDAT field in Azure db table 12-108
+        private DateTimeOffset dateTimeOffset;
+
+        public DateTimeOffset CREATEDAT
+        {
+            get { return dateTimeOffset; }
+            set
+            {
+                dateTimeOffset = value;
+                OnPropertyChanged("CREATEDAT");    // fire off a good old onpropertychanged event
+            }
+        }
 
 
         public event PropertyChangedEventHandler PropertyChanged;       // this bit auto-completed from CTRL+. - use OnPropertyChanged (qv) to affect 'set' methods

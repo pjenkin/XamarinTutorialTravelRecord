@@ -9,7 +9,7 @@
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <TextCell Text="{Binding ExperienceDescription}"
-                              />
+                              Detail="{Binding CREATEDAT, StringFormat='{0:d}'}"/>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
