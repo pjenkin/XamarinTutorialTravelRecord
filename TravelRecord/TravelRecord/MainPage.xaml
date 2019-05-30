@@ -7,6 +7,7 @@
 
 
     <StackLayout VerticalOptions="Center"
+                 CompressedLayout.IsHeadless="True"
                  Margin="20,0,20,0"> <!-- L,T,R,B -->
         <Image x:Name="iconImage"
                Aspect="AspectFit"
