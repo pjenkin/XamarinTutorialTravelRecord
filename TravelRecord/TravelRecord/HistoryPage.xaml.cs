@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TravelRecord.Model;
+using TravelRecord.ViewModel;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -13,13 +14,20 @@ namespace TravelRecord
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class HistoryPage : ContentPage
 	{
+
+        HistoryVM viewModel;
+
 		public HistoryPage ()
 		{
 			InitializeComponent ();
+
+            viewModel = new HistoryVM();
+            BindingContext = viewModel;
 		}
 
         // Implementing OnAppearing so as to refresh the data on the page whenever navigated back-to
-        protected  override async void OnAppearing()
+        //protected  override async void OnAppearing()
+        protected override void OnAppearing()
         {
             base.OnAppearing();
             /*
@@ -38,12 +46,23 @@ namespace TravelRecord
             */
             // From 11-89 onwards, reading from Azure database not from local SQLite
 
+            /*
+                        //var posts = await App.MobileService.GetTable<Post>().Where(p => p.UserId == App.user.Id).ToListAsync();
 
-            //var posts = await App.MobileService.GetTable<Post>().Where(p => p.UserId == App.user.Id).ToListAsync();
-            var posts = await Post.Read();          // Read posts for current user in App - refactored 12-95 for MVVM
-            postListView.ItemsSource = posts;
+                        viewModel.Posts.Clear();                // elements may already exist in list - clear list before fresh fetch from db
 
+                        var posts = await Post.Read();          // Read posts for current user in App - refactored 12-95 for MVVM
+                        foreach (var post in posts)
+                        {
+                            viewModel.Posts.Add(post);          // build up code-behind list of posts
+                        }
+                        // Itemsource of ListView for ObervableList set in XAML
+                        //postListView.ItemsSource = posts;     // REMmed out in 12-110
+            */
+            viewModel.UpdatePosts();                            // update the list of posts in the view NB Ctrl. 12-110
         }
+
+        // still not quite MVVM - TODO add this to HistoryVM?? ??
 
         private void PostListView_ItemSelected(object sender, SelectedItemChangedEventArgs e)
         {

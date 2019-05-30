@@ -12,7 +12,11 @@
     </ContentPage.Resources>
     <ContentPage.Content>
         <ListView x:Name="postListView"
-                  ItemSelected="PostListView_ItemSelected">
+                  ItemsSource="{Binding Posts}"
+                  ItemSelected="PostListView_ItemSelected"
+                 >     <!-- should ItemSelected be needed as of 12-110?? -->
+            <!--  ItemSelected="PostListView_ItemSelected" -->
+            <!-- Use ObsevableListCollection Posts 12-110 -->
             <!-- source set in the C# file -->
             <ListView.ItemTemplate>
                 <DataTemplate>
