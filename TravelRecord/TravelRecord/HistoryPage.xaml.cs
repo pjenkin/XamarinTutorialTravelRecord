@@ -74,5 +74,21 @@ namespace TravelRecord
                 Navigation.PushAsync(new PostDetail(selectedPost));
             }
         }
+
+        // TODO could convert this to a Command for VM to make MVVM 12-115
+        private async void MenuItem_Clicked(object sender, EventArgs e)
+        {
+            var post = (Post)((MenuItem)sender).CommandParameter;     // NB in XAML MenuItem, CommandParameter="{Binding}" - NB also chained casting
+            viewModel.DeletePost(post);
+
+            await viewModel.UpdatePosts();                                    // update ViewModel's list of posts after this deletion
+        }
+
+        // pull down to refresh - TODO implement as MVVM using RefreshCommand instead of Refreshing event in XAML
+        private async void PostListView_Refreshing(object sender, EventArgs e)
+        {
+            await viewModel.UpdatePosts();              // update the (historical) list of posts - need to make this async Task
+            postListView.IsRefreshing = false;          // clear flag to show refreshing is now over (need to have an async Task above)
+        }
     }
 }

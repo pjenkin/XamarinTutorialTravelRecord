@@ -12,6 +12,8 @@
     </ContentPage.Resources>
     <ContentPage.Content>
         <ListView x:Name="postListView"
+                  IsPullToRefreshEnabled="True"
+                  Refreshing="PostListView_Refreshing"
                   ItemsSource="{Binding Posts}"
                   ItemSelected="PostListView_ItemSelected"
                  >     <!-- should ItemSelected be needed as of 12-110?? -->
@@ -21,7 +23,16 @@
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <TextCell Text="{Binding ExperienceDescription}"
-                              Detail="{Binding CREATEDAT, Converter={StaticResource converter}}"/>
+                              Detail="{Binding CREATEDAT, Converter={StaticResource converter}}">
+                        <TextCell.ContextActions>
+                            <MenuItem Text="Delete"
+                                  Clicked="MenuItem_Clicked"
+                                  CommandParameter="{Binding}"
+                                  IsDestructive="True"/>
+                            <!-- could be a Command rather than click event handler - can still use CommandParameter 12-115 -->
+                            <!-- IsDestructive will show as red-background in iOS -->
+                        </TextCell.ContextActions>
+                    </TextCell>
                     <!-- fomerly Detail="{Binding CREATEDAT, StringFormat='{0:d}'}" -->
                 </DataTemplate>
             </ListView.ItemTemplate>

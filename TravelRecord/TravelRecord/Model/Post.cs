@@ -235,6 +235,26 @@ namespace TravelRecord.Model
         }
 
         /// <summary>
+        /// Delete a post from the db
+        /// Maybe DI should be used so that insertion could be to local or toS cloud (TODO)
+        /// </summary>
+        /// <param name="post"></param>
+        public static async Task<bool> Delete(Post post)                        
+        {
+            // NB Task<bool> as flag returned to show how things went - Tasks can't be of void return type anyway
+            try
+            {
+                await App.MobileService.GetTable<Post>().DeleteAsync(post);         // delete post - from Azure cloud db
+                return true;
+            }
+            catch(Exception)
+            {
+                return false;
+            }
+        }
+
+
+        /// <summary>
         /// Read list of posts (for a user recorded in the App object)
         /// 
         /// Refactored here for MVVM
