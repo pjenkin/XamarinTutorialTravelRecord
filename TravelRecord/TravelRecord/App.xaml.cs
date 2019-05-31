@@ -17,7 +17,7 @@ namespace TravelRecord
         public static MobileServiceClient MobileService = new MobileServiceClient("https://travelrecord-pnj.azurewebsites.net");
 
         // Table interfacing between local and cloud for sync'ing 12-116
-        public static IMobileServiceSyncTable<Post> postsTable;                     
+        public static IMobileServiceSyncTable<Post> postsTable;             // local table, through which sync'ing push and pull will be done           
 
         public static User user = new User();
 

@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Microsoft.WindowsAzure.MobileServices;
+using Newtonsoft.Json;
 using SQLite;
 using System;
 using System.Collections.Generic;
@@ -231,7 +232,16 @@ namespace TravelRecord.Model
         /// <param name="post"></param>
         public static async void Insert(Post post)
         {
-            await App.MobileService.GetTable<Post>().InsertAsync(post);         // insert post - to Azure cloud db
+            try
+            {
+                //await App.MobileService.GetTable<Post>().InsertAsync(post);         // insert post - to Azure cloud db
+                await App.postsTable.InsertAsync(post);             // insert post - to sync-linked local table and thence to Azure cloud db
+                await App.MobileService.SyncContext.PushAsync();    // push/sync db
+            }
+            catch (Exception exc)
+            {
+                await App.Current.MainPage.DisplayAlert("Error writing record",exc.Message, "Ok");
+            }
         }
 
         /// <summary>
@@ -244,11 +254,15 @@ namespace TravelRecord.Model
             // NB Task<bool> as flag returned to show how things went - Tasks can't be of void return type anyway
             try
             {
-                await App.MobileService.GetTable<Post>().DeleteAsync(post);         // delete post - from Azure cloud db
+                //await App.MobileService.GetTable<Post>().DeleteAsync(post);         // delete post - from Azure cloud db
+                await App.postsTable.DeleteAsync(post);             // delete post - to sync-linked local table and thence to Azure cloud db
+                await App.MobileService.SyncContext.PushAsync();    // push/sync db
+
                 return true;
             }
-            catch(Exception)
+            catch(Exception exc)
             {
+                await App.Current.MainPage.DisplayAlert("Error deleting record", exc.Message, "Ok");
                 return false;
             }
         }
@@ -262,7 +276,10 @@ namespace TravelRecord.Model
         /// <returns></returns>
         public static async Task<List<Post>> Read()
         {
-            var posts = await App.MobileService.GetTable<Post>().Where(p => p.UserId == App.user.Id).ToListAsync();     // get posts filtered by user - from Azure cloud db
+            //var posts = await App.MobileService.GetTable<Post>().Where(p => p.UserId == App.user.Id).ToListAsync();     // get posts filtered by user - from Azure cloud db
+            var posts = await App.postsTable.Where(p => p.UserId == App.user.Id).ToListAsync();     // get posts filtered by user - from Azure cloud db
+            // Read here done via local sync-linked db table (via which from Azure cloud at the mo)
+
             return posts;
         }
 

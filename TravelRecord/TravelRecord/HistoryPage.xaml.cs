@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TravelRecord.Helpers;
 using TravelRecord.Model;
 using TravelRecord.ViewModel;
 using Xamarin.Forms;
@@ -27,7 +28,7 @@ namespace TravelRecord
 
         // Implementing OnAppearing so as to refresh the data on the page whenever navigated back-to
         //protected  override async void OnAppearing()
-        protected override void OnAppearing()
+        protected override async void OnAppearing()
         {
             base.OnAppearing();
             /*
@@ -60,6 +61,8 @@ namespace TravelRecord
                         //postListView.ItemsSource = posts;     // REMmed out in 12-110
             */
             viewModel.UpdatePosts();                            // update the list of posts in the view NB Ctrl. 12-110
+
+            await AzureAppHelper.SyncAsync();
         }
 
         // still not quite MVVM - TODO add this to HistoryVM?? ??
@@ -88,6 +91,9 @@ namespace TravelRecord
         private async void PostListView_Refreshing(object sender, EventArgs e)
         {
             await viewModel.UpdatePosts();              // update the (historical) list of posts - need to make this async Task
+
+            await AzureAppHelper.SyncAsync();
+
             postListView.IsRefreshing = false;          // clear flag to show refreshing is now over (need to have an async Task above)
         }
     }

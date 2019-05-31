@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace TravelRecord.Helpers
 {
+    // TODO should really be called AzureAppServiceHelper - re Azure App Service
     public class AzureAppHelper
     {
         public static async Task SyncAsync()
