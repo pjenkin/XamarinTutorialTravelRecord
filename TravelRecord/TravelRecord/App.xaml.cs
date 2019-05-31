@@ -1,4 +1,6 @@
 ﻿using Microsoft.WindowsAzure.MobileServices;
+using Microsoft.WindowsAzure.MobileServices.SQLiteStore;
+using Microsoft.WindowsAzure.MobileServices.Sync;
 using System;
 using TravelRecord.Model;
 using Xamarin.Forms;
@@ -14,6 +16,9 @@ namespace TravelRecord
         // Azure code
         public static MobileServiceClient MobileService = new MobileServiceClient("https://travelrecord-pnj.azurewebsites.net");
 
+        // Table interfacing between local and cloud for sync'ing 12-116
+        public static IMobileServiceSyncTable<Post> postsTable;                     
+
         public static User user = new User();
 
         public App()
@@ -24,6 +29,7 @@ namespace TravelRecord
             MainPage = new NavigationPage(new MainPage());      // default entry point changed
         }
 
+        // Re-used from local-only for local db for offline-cloud sync'ing 12-116 - location in MainActivity(Android) or in AppDelegate(iOS) (TODO:UWP)
         public App(string databaseLocation)
         {
             InitializeComponent();
@@ -32,6 +38,13 @@ namespace TravelRecord
 
             DatabaseLocation = databaseLocation;                // this will be different according to platform, but this variable available to all
 
+            var store = new MobileServiceSQLiteStore(databaseLocation);      // Re-used, declare local db for sync'ing 12-116
+
+            store.DefineTable<Post>();                          // instantiate SQLite table (for offline/sync'ing) ready for use
+
+            MobileService.SyncContext.InitializeAsync(store);   // initialise ready for sync'ing later
+
+            postsTable = MobileService.GetSyncTable<Post>();      // NB Get*Sync*Table not just GetTable
         }
 
         protected override void OnStart()
