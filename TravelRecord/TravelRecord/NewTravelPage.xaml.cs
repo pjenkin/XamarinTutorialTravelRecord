@@ -12,6 +12,8 @@ using SQLite;
 using Plugin.Geolocator;
 using TravelRecord.Logic;
 using TravelRecord.ViewModel;
+using Plugin.Permissions;
+using Plugin.Permissions.Abstractions;
 
 namespace TravelRecord
 {
@@ -47,12 +49,49 @@ namespace TravelRecord
         protected async override void OnAppearing()
         {
             base.OnAppearing();
+            try
+            {
+                var status = await CrossPermissions.Current.CheckPermissionStatusAsync(Plugin.Permissions.Abstractions.Permission.Location);
+                // Check whether (location) permission granted or not
+                if (status != PermissionStatus.Granted)
+                {
+                    // If not yet granted by user, try asking for permission to use location
+                    if (await CrossPermissions.Current.ShouldShowRequestPermissionRationaleAsync(Permission.Location))
+                    {
+                        await DisplayAlert("Need permission", "The app will need to access your location", "Ok");
+                    }
 
-            var locator = CrossGeolocator.Current;
-            var position = await locator.GetPositionAsync();
+                    var results = await CrossPermissions.Current.RequestPermissionsAsync(Permission.Location);
+                        // Try again, to see whether permissions *now* granted
+                    if (results.ContainsKey(Permission.Location))
+                    {
+                        status = results[Permission.Location];      // update in case permission was granted just now
+                    }
+                }
+                if (status == PermissionStatus.Granted)
+                {
+                    try
+                    {
+                        var locator = CrossGeolocator.Current;
+                        var position = await locator.GetPositionAsync();
 
-            var venues = await VenueLogic.GetVenues(position.Latitude, position.Longitude);
-            venueListView.ItemsSource = venues;
+                        var venues = await VenueLogic.GetVenues(position.Latitude, position.Longitude);
+                        venueListView.ItemsSource = venues;
+                    }
+                    catch (Exception exc)
+                    {
+                        await DisplayAlert("Problem/Error", exc.Message, "Ok");
+                    }
+                }
+                else
+                {
+                    await DisplayAlert("No permission", "App cannot proceed and get nearby features because you did not grant permission to access your location", "Ok");
+                }
+            }
+            catch(Exception ex)
+            {
+
+            }
         }
     }
 }

@@ -9,6 +9,7 @@ using Android.OS;
 using System.IO;
 using Plugin.Permissions;
 using Microsoft.WindowsAzure.MobileServices;
+using Plugin.CurrentActivity;
 
 namespace TravelRecord.Droid
 {
@@ -31,6 +32,8 @@ namespace TravelRecord.Droid
             Plugin.CurrentActivity.CrossCurrentActivity.Current.Init(this, savedInstanceState);// Initialise permissions, specifying activity & bundle - AndroidManifest.xml must be edited 
             // step 3 of 3 for Plugin.Permissions - in Info.plist, add 'Privacy-Calendars Usage', 'Privacy - Bluetooth Peripheral Usage Description'
 
+
+            CrossCurrentActivity.Current.Activity = this;   // for Permissions 12-114 
 
             // define the location of the db in terms of path
             string dbName = "travel_db.sqlite";
